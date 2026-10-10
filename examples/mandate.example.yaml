@@ -1,0 +1,51 @@
+# Investor mandate – the standing instructions of the pipeline.
+# Everything the Immobilien-Kompass had hard-coded is configurable here.
+name: "Beispiel-Mandat ausgewogen"
+version: "2026-10"
+residence: "CH-ZH"
+
+markets:
+  - code: DE
+    cities: ["Leipzig"]
+    districts: ["Reudnitz-Thonberg", "Anger-Crottendorf", "Lindenau", "Plagwitz"]
+    financing: leveraged
+    object_types: ["wohnung"]
+    max_purchase_price: 300000
+    min_living_area_m2: 40
+  - code: AL
+    cities: ["Vlorë"]
+    financing: cash
+    object_types: ["wohnung"]
+    max_purchase_price: 60000
+
+capital:
+  equity_available: 95000
+  liquidity_reserve: 15000
+  currency: EUR
+
+strategy:
+  mode: ausgewogen
+  horizon_years: 10
+  target_gross_yield: 0.045
+  score_weights:
+    cash_flow: 25
+    gross_yield: 20
+    ltv: 20
+    stress_cash_flow: 15
+    checks: 20
+
+limits:
+  max_ltv: 0.80
+  min_cash_flow_monthly: -250
+  min_stress_cash_flow_monthly: -100
+  min_dscr: 1.0
+  min_score_for_review: 70
+
+watch_triggers:
+  price_drop_pct: 0.05
+  price_below_target: true
+  days_on_market_min: 60
+
+# Optional overrides of the market profile's financing defaults
+financing_defaults:
+  transfer_tax: 0.055   # Sachsen

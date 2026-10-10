@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/malkreide/dealkit/schemas/listing.schema.json",
+  "title": "Listing (Objektprofil)",
+  "description": "Structured profile of one property offer. Every fact is an evidenced value (see evidence.schema.json). The extractor (LLM or human) fills this; the valuation engine reads only the .value fields and reports the weakest status among the critical fields.",
+  "type": "object",
+  "required": ["id", "market", "captured_at", "source", "core"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "description": "Stable identifier, e.g. 'de-leipzig-2026-0001'. Fingerprint for relisting detection lives in corpus, not here." },
+    "market": {
+      "type": "string",
+      "enum": ["DE", "CH", "AL", "ME", "RS"],
+      "description": "Market profile key. Decides cost model, checklist and currency."
+    },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["portal", "makler", "expose", "offmarket", "nutzer"] },
+        "portal": { "type": "string" },
+        "url": { "type": "string" },
+        "listing_title": { "type": "string" },
+        "documents": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "country": { "type": "string" },
+        "city": { "type": "string" },
+        "district": { "type": "string" },
+        "postal_code": { "type": "string" },
+        "street": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "precision": { "type": "string", "enum": ["exact", "street", "district", "city"] }
+      }
+    },
+    "core": {
+      "description": "Critical fields. A positive recommendation is blocked while any of these has status 'fehlend'.",
+      "type": "object",
+      "required": ["purchase_price", "living_area_m2", "monthly_rent"],
+      "properties": {
+        "purchase_price": { "$ref": "evidence.schema.json" },
+        "living_area_m2": { "$ref": "evidence.schema.json" },
+        "monthly_rent": { "$ref": "evidence.schema.json", "description": "Net cold rent per month (DE: Kaltmiete). For short-term-rental markets use operating.short_term_rental instead and set this to the long-term equivalent with status 'geschaetzt'." },
+        "currency": { "type": "string", "enum": ["EUR", "CHF", "ALL", "RSD"], "default": "EUR" }
+      }
+    },
+    "object": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["wohnung", "haus", "mfh", "gewerbe", "neubau_projekt"] },
+        "rooms": { "$ref": "evidence.schema.json" },
+        "floor": { "$ref": "evidence.schema.json" },
+        "year_built": { "$ref": "evidence.schema.json" },
+        "condition": { "$ref": "evidence.schema.json" },
+        "energy_class": { "$ref": "evidence.schema.json" },
+        "energy_demand_kwh_m2a": { "$ref": "evidence.schema.json" },
+        "heating": { "$ref": "evidence.schema.json" },
+        "rented": { "$ref": "evidence.schema.json", "description": "true if currently let" },
+        "hoa_fee_monthly": { "$ref": "evidence.schema.json", "description": "DE: Hausgeld; CH: Nebenkosten STWE" },
+        "hoa_reserve": { "$ref": "evidence.schema.json", "description": "DE: Instandhaltungsrücklage der WEG" },
+        "buyer_commission_rate": { "$ref": "evidence.schema.json" },
+        "renovation_need": { "$ref": "evidence.schema.json" }
+      }
+    },
+    "operating": {
+      "type": "object",
+      "properties": {
+        "non_recoverable_costs_monthly": { "$ref": "evidence.schema.json" },
+        "short_term_rental": {
+          "type": "object",
+          "description": "Only for AL/ME coastal objects. Converted to a monthly long-term-rent equivalent by the market profile.",
+          "properties": {
+            "average_daily_rate": { "$ref": "evidence.schema.json" },
+            "occupancy_rate": { "$ref": "evidence.schema.json" },
+            "season_months": { "$ref": "evidence.schema.json" },
+            "management_fee_rate": { "$ref": "evidence.schema.json" },
+            "platform_fee_rate": { "$ref": "evidence.schema.json" }
+          }
+        }
+      }
+    },
+    "market_context": {
+      "type": "object",
+      "description": "Filled by the market-context step (corpus + open data), not by the listing extractor.",
+      "properties": {
+        "comparable_price_per_m2": { "$ref": "evidence.schema.json" },
+        "comparable_rent_per_m2": { "$ref": "evidence.schema.json" },
+        "days_on_market": { "$ref": "evidence.schema.json" },
+        "price_history": {
+          "type": "array",
+          "items": { "type": "object", "required": ["date", "price"], "properties": { "date": { "type": "string", "format": "date" }, "price": { "type": "number" } } }
+        }
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "description": "Checklist items with findings. The engine never answers these; humans do. See redflags.py for the per-market catalogue.",
+      "items": {
+        "type": "object",
+        "required": ["id", "state"],
+        "properties": {
+          "id": { "type": "string" },
+          "state": { "type": "string", "enum": ["offen", "geprueft_ok", "geprueft_risiko", "nicht_anwendbar"] },
+          "severity": { "type": "string", "enum": ["info", "mittel", "hoch", "blocker"] },
+          "finding": { "type": "string" },
+          "evidence": { "$ref": "evidence.schema.json" }
+        }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

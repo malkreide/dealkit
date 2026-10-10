@@ -1,0 +1,34 @@
+{
+  "id": "de-leipzig-2026-0001",
+  "market": "DE",
+  "captured_at": "2026-10-10T18:00:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "example-portal.de",
+    "url": "https://example.invalid/expose/0001",
+    "listing_title": "Vermietete 2-Zimmer-Wohnung in Reudnitz (SYNTHETISCHES BEISPIEL)"
+  },
+  "address": { "country": "DE", "city": "Leipzig", "district": "Reudnitz-Thonberg", "postal_code": "04317", "precision": "district" },
+  "core": {
+    "purchase_price": { "value": 175000, "status": "belegt", "source": { "kind": "portal", "quote": "Kaufpreis: 175.000 EUR" } },
+    "living_area_m2": { "value": 58.5, "status": "belegt", "source": { "kind": "portal", "quote": "Wohnfläche: ca. 58,5 m²" } },
+    "monthly_rent": { "value": 600, "status": "belegt", "source": { "kind": "portal", "quote": "Nettokaltmiete: 600 EUR" } },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung",
+    "rooms": { "value": 2, "status": "belegt", "source": { "kind": "portal", "quote": "2 Zimmer" } },
+    "year_built": { "value": 1905, "status": "belegt", "source": { "kind": "portal", "quote": "Baujahr 1905, saniert 2012" } },
+    "energy_class": { "value": "E", "status": "belegt", "source": { "kind": "portal", "quote": "Energieeffizienzklasse E" } },
+    "rented": { "value": true, "status": "belegt", "source": { "kind": "portal", "quote": "vermietet" } },
+    "hoa_fee_monthly": { "value": 210, "status": "belegt", "source": { "kind": "portal", "quote": "Hausgeld: 210 EUR" } },
+    "buyer_commission_rate": { "value": 0.0357, "status": "belegt", "source": { "kind": "portal", "quote": "Provision: 3,57 % inkl. MwSt." } },
+    "renovation_need": { "value": 0, "status": "angenommen", "source": { "kind": "annahme", "note": "saniert 2012; kein Befund" } }
+  },
+  "operating": {
+    "non_recoverable_costs_monthly": { "value": 70, "status": "geschaetzt", "source": { "kind": "modell", "note": "Hausgeld 210 abzgl. umlagefähig ~140 (Schätzung ohne Wirtschaftsplan)" } }
+  },
+  "red_flags": [
+    { "id": "transfer_tax_state", "state": "geprueft_ok", "finding": "Sachsen 5.5 % im Mandat gesetzt" }
+  ]
+}

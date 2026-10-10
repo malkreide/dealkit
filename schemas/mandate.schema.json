@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/malkreide/dealkit/schemas/mandate.schema.json",
+  "title": "Investor mandate",
+  "description": "The investor's standing instructions. Everything the Kompass had hard-coded (4.5 % yield target, score weights, cash-flow floor) lives here. Think of it as the 'persona' of the pipeline (personakit pattern).",
+  "type": "object",
+  "required": ["name", "markets", "capital", "strategy", "limits"],
+  "additionalProperties": false,
+  "properties": {
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "residence": { "type": "string", "description": "Tax residence, e.g. 'CH-ZH'. Drives cross-border tax notes (Steuerausscheidung, Progressionsvorbehalt)." },
+    "markets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "financing"],
+        "properties": {
+          "code": { "type": "string", "enum": ["DE", "CH", "AL", "ME", "RS"] },
+          "cities": { "type": "array", "items": { "type": "string" } },
+          "districts": { "type": "array", "items": { "type": "string" } },
+          "financing": { "type": "string", "enum": ["leveraged", "cash"], "description": "Balkan objects are normally cash deals (no CH bank will lend on them)." },
+          "object_types": { "type": "array", "items": { "type": "string", "enum": ["wohnung", "haus", "mfh", "gewerbe", "neubau_projekt"] } },
+          "max_purchase_price": { "type": "number" },
+          "min_living_area_m2": { "type": "number" }
+        }
+      }
+    },
+    "capital": {
+      "type": "object",
+      "required": ["equity_available", "liquidity_reserve", "currency"],
+      "properties": {
+        "equity_available": { "type": "number" },
+        "liquidity_reserve": { "type": "number" },
+        "currency": { "type": "string", "enum": ["EUR", "CHF"] }
+      }
+    },
+    "strategy": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["cashflow", "wertsteigerung", "ausgewogen"] },
+        "horizon_years": { "type": "integer", "minimum": 1 },
+        "target_gross_yield": { "type": "number", "description": "Decimal, e.g. 0.045" },
+        "score_weights": {
+          "type": "object",
+          "description": "Max points per score component; must sum to 100.",
+          "properties": {
+            "cash_flow": { "type": "number" },
+            "gross_yield": { "type": "number" },
+            "ltv": { "type": "number" },
+            "stress_cash_flow": { "type": "number" },
+            "checks": { "type": "number" }
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_ltv": { "type": "number" },
+        "min_cash_flow_monthly": { "type": "number", "description": "Below this the object is 'nicht passend' (Kompass: -250)." },
+        "min_stress_cash_flow_monthly": { "type": "number", "description": "Kompass: -100" },
+        "min_dscr": { "type": "number" },
+        "min_score_for_review": { "type": "number", "description": "Kompass: 70" }
+      }
+    },
+    "watch_triggers": {
+      "type": "object",
+      "description": "Conditions that move an object from 'beobachten' back to 'pruefen'.",
+      "properties": {
+        "price_drop_pct": { "type": "number", "description": "e.g. 0.05 = 5 % price cut" },
+        "price_below_target": { "type": "boolean", "description": "re-check when asking price falls below the engine's target price" },
+        "days_on_market_min": { "type": "integer" }
+      }
+    },
+    "financing_defaults": {
+      "type": "object",
+      "description": "Overrides for the market profile's financing defaults (interest, amortisation, fixation).",
+      "additionalProperties": { "type": "number" }
+    }
+  }
+}

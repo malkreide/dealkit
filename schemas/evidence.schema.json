@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/malkreide/dealkit/schemas/evidence.schema.json",
+  "title": "Evidenced value",
+  "description": "A single fact with its provenance. Every number that enters the valuation carries a status so the assessment can show how load-bearing it is. Pattern borrowed from journeykit's evidence atoms.",
+  "type": "object",
+  "required": ["value", "status", "source"],
+  "additionalProperties": false,
+  "properties": {
+    "value": {
+      "description": "The fact itself (number, string, boolean). null is allowed only with status 'fehlend'.",
+      "type": ["number", "string", "boolean", "null"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["belegt", "geschaetzt", "angenommen", "fehlend"],
+      "description": "belegt = quoted from a source; geschaetzt = derived by a model or a person from evidence; angenommen = default/assumption without object-specific evidence; fehlend = unknown."
+    },
+    "source": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["amtlich", "portal", "makler", "expose", "nutzer", "modell", "annahme"],
+          "description": "Source quality tier. 'amtlich' (official register/statistics) ranks above 'portal'/'makler' (interest-driven)."
+        },
+        "url": { "type": "string" },
+        "document": { "type": "string", "description": "File name or document title, e.g. 'Expose_2026-10-01.pdf'" },
+        "quote": { "type": "string", "description": "Verbatim text span the value was taken from. Mandatory for status 'belegt'." },
+        "retrieved_at": { "type": "string", "format": "date-time" },
+        "note": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "belegt" } } },
+      "then": { "properties": { "source": { "required": ["kind", "quote"] } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "fehlend" } } },
+      "then": { "properties": { "value": { "type": "null" } } }
+    }
+  ]
+}

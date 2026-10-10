@@ -1,0 +1,35 @@
+{
+  "id": "al-vlore-2026-0001",
+  "market": "AL",
+  "captured_at": "2026-10-10T18:00:00Z",
+  "source": {
+    "kind": "makler",
+    "url": "https://example.invalid/vlore/0001",
+    "listing_title": "Apartament 1+1 Lungomare (SYNTHETISCHES BEISPIEL)"
+  },
+  "address": { "country": "AL", "city": "Vlorë", "district": "Lungomare", "precision": "district" },
+  "core": {
+    "purchase_price": { "value": 52000, "status": "belegt", "source": { "kind": "makler", "quote": "Çmimi: 52.000 €" } },
+    "living_area_m2": { "value": 48, "status": "belegt", "source": { "kind": "makler", "quote": "Sipërfaqe: 48 m²" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "annahme", "note": "Langzeitmiete nicht inseriert; STR-Ertrag aus Maklerangaben" } },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung",
+    "year_built": { "value": 2021, "status": "belegt", "source": { "kind": "makler", "quote": "Ndërtim 2021" } },
+    "condition": { "value": "neu, möbliert", "status": "belegt", "source": { "kind": "makler", "quote": "i mobiluar" } }
+  },
+  "operating": {
+    "short_term_rental": {
+      "average_daily_rate": { "value": 55, "status": "geschaetzt", "source": { "kind": "makler", "note": "Maklerangabe Saison; nicht durch Plattformdaten belegt" } },
+      "occupancy_rate": { "value": 0.35, "status": "angenommen", "source": { "kind": "annahme", "note": "Jahresdurchschnitt; Saison Mai–Sep ~70 %, sonst ~10 %" } },
+      "management_fee_rate": { "value": 0.25, "status": "angenommen", "source": { "kind": "annahme" } },
+      "platform_fee_rate": { "value": 0.03, "status": "angenommen", "source": { "kind": "annahme" } }
+    }
+  },
+  "red_flags": [
+    { "id": "ownership_certificate", "state": "offen" },
+    { "id": "legalisation", "state": "offen" },
+    { "id": "seismic", "state": "geprueft_ok", "finding": "Baujahr 2021, Statiknachweis laut Makler vorhanden – Dokument anfordern" }
+  ]
+}

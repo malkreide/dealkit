@@ -1,0 +1,7 @@
+# Copy to config.yml (gitignored). Never commit real IDs.
+mandate: examples/mandate.example.yaml
+notion:
+  deal_pipeline_data_source_id: "collection://REPLACE-ME"
+  deal_pipeline_database_url: "https://www.notion.so/REPLACE-ME"
+gmail:
+  alert_label: "deals"

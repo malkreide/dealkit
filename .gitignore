@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+config.yml
+fixtures/listings/*.txt
+fixtures/listings/*.pdf
+corpus.sqlite
+assessment*.json
+.DS_Store
