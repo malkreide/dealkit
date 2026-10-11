@@ -26,7 +26,7 @@ Gedächtnis ergänzen.**
 Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
 `docs/EXTRACTION_ERRORS.md` (massgeblich, auch für die Gold-Dateien des Evals).
 - Mit dem Gerüst beginnen: `dealkit extract <datei> --type <TYP> --out listing.json`
-  (Dateiname mit Präfix `de-`/`ch-`/`al-`/`me-`/`rs-` oder `--market`). Es setzt id, market,
+  (Dateiname mit Markt-Präfix, z. B. `de-`, `at-`, `bg-`, oder `--market`). Es setzt id, market,
   Red-Flag-Liste (`offen`) und alle Felder auf `fehlend`. Felder füllen, keines löschen.
 - Jeder Wert ist ein Evidenz-Objekt `{value, status, source}`.
 - `belegt` **nur** mit wörtlichem `quote` aus der Quelle: ein zusammenhängender Ausschnitt,
@@ -41,6 +41,8 @@ Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
 - Notes auf Deutsch; keine Namen, Telefonnummern oder E-Mails privater Verkäufer übernehmen.
 - Quellenstufe ehrlich setzen: Portal/Makler-Angaben sind `portal`/`makler`, nie `amtlich`.
 - `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste).
+  AT, MK, BA, BG und HR sind reine Extraktionsmärkte: nach `dealkit validate` enden, kein Screening.
+- Preis in der inserierten Währung (`core.currency`: EUR, CHF, BAM, MKD …); Umrechnungen nur in die Note.
 - Red Flags stehen im Gerüst (sonst `dealkit checklist <MARKT> --type <TYP>`). Nur Punkte auf
   `geprueft_ok`/`geprueft_risiko` setzen, die der User ausdrücklich bestätigt hat.
 

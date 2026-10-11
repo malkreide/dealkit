@@ -21,6 +21,11 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
   language.
 - Optional extra `pdf` (pypdf); `*.pred.json` fixtures are gitignored.
 - Tests with synthetic mini-fixtures under `tests/data/extraction/`.
+- Extraction-only markets AT, MK, BA, BG, HR (ADR 10): accepted by the listing schema, the scaffold
+  and the eval; `dealkit screen` refuses them with a clear message. Currencies BAM and MKD.
+- Eval compares `core.currency` (`waehrung_abweichung`): a price in the wrong currency is wrong.
+- `fixtures/listings/MANIFEST.md`: the 20 selected listings with file names and source links
+  (texts still to be supplied); error classes 14–16 and a coverage section in `EXTRACTION_ERRORS.md`.
 
 ## 0.1.0 – 2026-10-10
 

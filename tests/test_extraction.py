@@ -152,6 +152,14 @@ def test_both_missing_is_correct(gold, pred):
     assert compare("x", gold, pred, SOURCE).correct
 
 
+def test_currency_must_match(gold, pred):
+    gold["core"]["currency"] = "BAM"
+    gold["core"]["monthly_rent"] = pred["core"]["monthly_rent"] = ev(None, "fehlend")
+    r = compare("x", gold, pred, SOURCE)  # pred currency defaults to EUR
+    assert classes(r) == ["waehrung_abweichung"]
+    assert not r.fields["purchase_price"] and r.fields["monthly_rent"] and r.fields["living_area_m2"]
+
+
 def test_value_missed(gold, pred):
     pred["core"]["living_area_m2"] = ev(None, "fehlend")
     assert classes(compare("x", gold, pred, SOURCE)) == ["wert_verpasst"]
@@ -316,7 +324,10 @@ def test_txt_wins_over_pdf(tmp_path, gold):
 NOW = datetime(2026, 10, 11, 9, 30, tzinfo=UTC)
 
 
-@pytest.mark.parametrize("name,market", [("de-leipzig-01.txt", "DE"), ("AL-vlore-02.pdf", "AL"), ("ch-zh-03.txt", "CH"), ("leipzig.txt", None), ("deu-x.txt", None)])
+@pytest.mark.parametrize(
+    "name,market",
+    [("de-leipzig-01.txt", "DE"), ("AL-vlore-02.pdf", "AL"), ("ch-zh-03.txt", "CH"), ("at-graz-07.txt", "AT"), ("bg-plovdiv-18.txt", "BG"), ("leipzig.txt", None), ("deu-x.txt", None)],
+)
 def test_market_from_filename(name, market):
     assert market_from_filename(name) == market
 
@@ -364,3 +375,28 @@ def test_cli_extract_unknown_prefix(tmp_path):
     src.write_text("SYNTHETISCH", encoding="utf-8")
     res = CliRunner().invoke(main, ["extract", str(src)])
     assert res.exit_code == 2 and "Präfix" in res.output
+
+
+# --- extraction-only markets ---------------------------------------------------
+
+
+@pytest.mark.parametrize("name,market,currency", [("at-graz-07.txt", "AT", "EUR"), ("ba-sarajevo-16.txt", "BA", "BAM"), ("mk-skopje-12.txt", "MK", "EUR")])
+def test_extraction_only_market_scaffold_validates(name, market, currency):
+    doc = scaffold(name, now=NOW)
+    assert doc["market"] == market and doc["core"]["currency"] == currency
+    assert validate(doc, "listing") == []
+    assert [rf["id"] for rf in doc["red_flags"]] == [c.id for c in checklist(market)]  # common checks only
+
+
+def test_screen_refuses_extraction_only_market(tmp_path, gold):
+    from dealkit.pipeline import screen
+    from dealkit.schema import load
+
+    gold["market"] = "AT"
+    mandate = load(ROOT / "examples" / "mandate.example.yaml")
+    with pytest.raises(ValueError, match="extraction-only"):
+        screen(gold, mandate)
+    path = tmp_path / "at.json"
+    path.write_text(json.dumps(gold), encoding="utf-8")
+    res = CliRunner().invoke(main, ["screen", str(path), "-m", str(ROOT / "examples" / "mandate.example.yaml")])
+    assert res.exit_code == 1 and "extraction-only" in res.output

@@ -22,7 +22,7 @@ made structural:
 | `schemas/listing.schema.json` | Structured property profile (Objektprofil) built from evidenced values. |
 | `schemas/mandate.schema.json` | The investor's standing instructions: markets, capital, strategy, limits, watch triggers. Everything the Kompass hard-coded lives here. |
 | `src/dealkit/model.py` | Deterministic financing / cash-flow / target-price / stress / 5-10-15-year scenario engine. Python port of `lib/model.ts`, backtested to the cent. |
-| `src/dealkit/profiles.py` | Market profiles: DE (reference), CH, AL, ME, RS (the last four are stubs with documented assumptions). |
+| `src/dealkit/profiles.py` | Market profiles: DE (reference), CH, AL, ME, RS (the last four are stubs with documented assumptions). AT, MK, BA, BG, HR are extraction-only markets without a profile. |
 | `src/dealkit/redflags.py` | Per-market due-diligence checklists. The engine lists and tracks them; humans answer them. A `blocker` finding overrides any score. |
 | `src/dealkit/rules.py` | `kompass_v1` (original score + decision table, for backtests) and `dealkit_v1` (reframed rules with three hard overrides). |
 | `src/dealkit/cli.py` | `dealkit validate | screen | checklist | extract | backtest` |

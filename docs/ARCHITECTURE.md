@@ -42,6 +42,7 @@ Mandat (YAML)        Inserat (URL / PDF / Text / Alert-Mail)
 | 7 | Kein Scraping | ToS, JS-Rendering, Blockaden. Alerts + manuelle Eingabe sind robuster und legal. |
 | 8 | Pi-Cluster gestrichen, Pi 5 optional als Fetcher | Kleine lokale Modelle extrahieren unzuverlässig; K3s löst kein vorhandenes Problem. |
 | 9 | `kompass_v1` bleibt im Code | Rückwärts-Backtest gegen `lib/model.ts` und die Kompass-Entscheidungstabelle. |
+| 10 | Extraktionsmärkte ohne Profil (AT, MK, BA, BG, HR) | Die reale Auswahl reicht über die Profilmärkte hinaus. Extraktionsqualität hängt an Sprache und Inseratformat, nicht am Finanzmodell; diese Märkte validieren und gehen ins Eval, `screen` lehnt sie ab, bis ein Profil mit belegten Annahmen existiert. Kein Profil «auf Vorrat». |
 
 ## Datenqualität
 

@@ -268,8 +268,23 @@ PROFILES: dict[str, MarketProfile] = {
 }
 
 
+# Markets the extractor and the extraction eval understand, but which have no
+# financial profile yet: listings validate and can be evaluated, screening is
+# refused. Value = default listing currency (BG uses the euro since 2026).
+EXTRACTION_ONLY: dict[str, str] = {"AT": "EUR", "MK": "EUR", "BA": "BAM", "BG": "EUR", "HR": "EUR"}
+
+ALL_MARKETS: tuple[str, ...] = (*PROFILES, *EXTRACTION_ONLY)
+
+
+def market_currency(code: str) -> str:
+    """Default listing currency of a market, with or without a profile."""
+    return PROFILES[code].currency if code in PROFILES else EXTRACTION_ONLY[code]
+
+
 def get_profile(code: str) -> MarketProfile:
     try:
         return PROFILES[code]
     except KeyError as e:
+        if code in EXTRACTION_ONLY:
+            raise ValueError(f"market {code!r} is extraction-only (no financial profile yet); screening is not available") from e
         raise ValueError(f"unknown market profile {code!r}; known: {sorted(PROFILES)}") from e
