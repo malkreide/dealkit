@@ -25,7 +25,8 @@ made structural:
 | `src/dealkit/profiles.py` | Market profiles: DE (reference), CH, AL, ME, RS (the last four are stubs with documented assumptions). |
 | `src/dealkit/redflags.py` | Per-market due-diligence checklists. The engine lists and tracks them; humans answer them. A `blocker` finding overrides any score. |
 | `src/dealkit/rules.py` | `kompass_v1` (original score + decision table, for backtests) and `dealkit_v1` (reframed rules with three hard overrides). |
-| `src/dealkit/cli.py` | `dealkit validate | screen | checklist | backtest` |
+| `src/dealkit/cli.py` | `dealkit validate | screen | checklist | extract | backtest` |
+| `src/dealkit/extraction.py`, `scripts/eval_extraction.py` | Extraction scaffold (`dealkit extract`, no LLM) and the stage-1 eval: gold vs. candidate, ±1 % on core values, exact status, every `belegt` quote must occur in the source text. Error classes: `docs/EXTRACTION_ERRORS.md`. |
 | `skills/deal-screen/` | Claude skill that runs the pipeline end-to-end and ends at a preview. |
 
 ## Quick start
@@ -36,6 +37,8 @@ dealkit backtest                                   # reproduces the Kompass work
 dealkit validate examples/listing.leipzig.json     # schema + plausibility lints
 dealkit screen examples/listing.leipzig.json -m examples/mandate.example.yaml
 dealkit checklist AL --type wohnung                # red-flag list to paste into a listing
+dealkit extract fixtures/listings/de-x.txt -o x.json # empty, schema-valid listing to fill
+python scripts/eval_extraction.py                  # extraction eval (stage 1)
 pytest
 ```
 

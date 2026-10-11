@@ -1,0 +1,12 @@
+{
+  "id": "de-synth-jahresmiete",
+  "market": "DE",
+  "captured_at": "2026-10-11T08:00:00Z",
+  "source": { "kind": "portal", "listing_title": "SYNTHETISCH" },
+  "core": {
+    "purchase_price": { "value": 98000, "status": "belegt", "source": { "kind": "portal", "quote": "Kaufpreis: 98.000 €" } },
+    "living_area_m2": { "value": 31, "status": "belegt", "source": { "kind": "portal", "quote": "Wohnfläche: 31 m²" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "portal", "quote": "Jahresnettokaltmiete: 4.320 €", "note": "Jahresmiete; 4.320 / 12 = 360 €/Monat – vom Menschen zu bestätigen" } },
+    "currency": "EUR"
+  }
+}

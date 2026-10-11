@@ -1,0 +1,12 @@
+{
+  "id": "al-synth-marreveshje",
+  "market": "AL",
+  "captured_at": "2026-10-11T08:00:00Z",
+  "source": { "kind": "makler", "listing_title": "SYNTHETISCH" },
+  "core": {
+    "purchase_price": { "value": null, "status": "fehlend", "source": { "kind": "makler", "quote": "Çmimi: me marrëveshje", "note": "Preis nach Vereinbarung" } },
+    "living_area_m2": { "value": 62, "status": "belegt", "source": { "kind": "makler", "quote": "Sipërfaqja neto: 62 m²" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "annahme", "note": "Verkaufsinserat ohne Mietangabe" } },
+    "currency": "EUR"
+  }
+}

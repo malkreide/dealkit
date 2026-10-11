@@ -1,4 +1,4 @@
-"""Command-line interface: validate, screen, checklist, backtest."""
+"""Command-line interface: validate, screen, checklist, extract, backtest."""
 
 from __future__ import annotations
 
@@ -59,6 +59,40 @@ def checklist_cmd(market, obj_type):
     """Print the red-flag checklist for a market (to paste into a listing)."""
     items = [{"id": c.id, "state": "offen", "question": c.question, "severity_if_risk": c.severity_if_risk} for c in checklist(market, obj_type)]
     click.echo(json.dumps(items, indent=2, ensure_ascii=False))
+
+
+@main.command("extract")
+@click.argument("source", type=click.Path(exists=True, dir_okay=False))
+@click.option("--out", "-o", type=click.Path(dir_okay=False), help="Write scaffold to file instead of stdout")
+@click.option("--market", type=click.Choice(["DE", "CH", "AL", "ME", "RS"]), default=None, help="Override the market derived from the file-name prefix")
+@click.option("--type", "obj_type", type=click.Choice(["wohnung", "haus", "mfh", "gewerbe", "neubau_projekt"]), default=None, help="Object type (filters the checklist)")
+@click.option("--source-kind", type=click.Choice(["portal", "makler", "expose", "offmarket", "nutzer"]), default="portal")
+@click.option("--url", default=None)
+@click.option("--force", is_flag=True, help="Overwrite an existing --out file")
+def extract_cmd(source, out, market, obj_type, source_kind, url, force):
+    """Create the extraction scaffold for a listing text (no LLM).
+
+    Sets id, market (from the prefix de-/ch-/al-/me-/rs-), captured_at, source and the
+    red-flag checklist (all 'offen'); every evidence field starts as 'fehlend'. The
+    deal-screen skill fills it in.
+    """
+    from .extraction import scaffold
+
+    try:
+        doc = scaffold(source, market=market, object_type=obj_type, source_kind=source_kind, url=url)
+    except ValueError as e:
+        raise click.UsageError(str(e)) from e
+    errors = validate(doc, "listing")
+    if errors:  # would be a bug in the scaffold
+        raise click.ClickException("scaffold invalid: " + "; ".join(errors))
+    text = json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+    if not out:
+        click.echo(text, nl=False)
+        return
+    if Path(out).exists() and not force:
+        raise click.ClickException(f"{out} exists – use --force to overwrite (filled values would be lost)")
+    Path(out).write_text(text, encoding="utf-8")
+    click.echo(f"written {out}: {doc['id']} ({doc['market']}), {len(doc['red_flags'])} red flags offen, all fields fehlend")
 
 
 @main.command("backtest")

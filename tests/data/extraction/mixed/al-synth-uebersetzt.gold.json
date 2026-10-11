@@ -1,0 +1,12 @@
+{
+  "id": "al-synth-uebersetzt",
+  "market": "AL",
+  "captured_at": "2026-10-11T08:00:00Z",
+  "source": { "kind": "makler", "listing_title": "SYNTHETISCH" },
+  "core": {
+    "purchase_price": { "value": 85000, "status": "belegt", "source": { "kind": "makler", "quote": "Çmimi: 85.000 €" } },
+    "living_area_m2": { "value": null, "status": "fehlend", "source": { "kind": "makler", "quote": "Sipërfaqja: 96 m²", "note": "neto/bruto nicht angegeben" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "annahme" } },
+    "currency": "EUR"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "de-synth-korrekt",
+  "market": "DE",
+  "captured_at": "2026-10-11T09:00:00Z",
+  "source": { "kind": "portal", "documents": ["de-synth-korrekt.txt"] },
+  "core": {
+    "purchase_price": { "value": 175000, "status": "belegt", "source": { "kind": "portal", "quote": "Kaufpreis:\n175.000 EUR" } },
+    "living_area_m2": { "value": 58.5, "status": "belegt", "source": { "kind": "portal", "quote": "Wohnfläche: ca. 58,5 m²" } },
+    "monthly_rent": { "value": 603, "status": "belegt", "source": { "kind": "portal", "quote": "Nettokaltmiete: 600 EUR", "note": "Wert absichtlich +0,5 % für Toleranztest" } },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung",
+    "year_built": { "value": 1912, "status": "belegt", "source": { "kind": "portal", "quote": "Baujahr 1912" } }
+  }
+}

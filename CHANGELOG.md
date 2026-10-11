@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.2.0-dev – unreleased
+
+Stage 1 of the roadmap: extraction with provenance – eval harness.
+
+- `scripts/eval_extraction.py`: compares `fixtures/listings/<name>.pred.json` with
+  `<name>.gold.json` and the source text (`.txt`, or `.pdf` via pypdf). Core values ±1 %,
+  status exact, every `belegt` quote must occur in the source (whitespace-normalised).
+  Prints a table per fixture, the overall rate and the error classes. Exit code 1 on a hard-gate
+  violation (or with `--min-rate` below the threshold), 2 on missing fixtures or a broken gold
+  file; `--json` for machine-readable output.
+- `dealkit extract <file> --out <pred.json>`: schema-valid scaffold without any LLM – id, market
+  from the file-name prefix, captured_at, source, red-flag checklist (`offen`), every core and
+  object field `fehlend`. Refuses to overwrite without `--force`.
+- `src/dealkit/extraction.py`: scaffold, comparison and report logic (importable, tested).
+- `docs/EXTRACTION_ERRORS.md`: expected error classes (price range, warm vs. cold rent, annual
+  rent, project pages, gross vs. net area, Albanian listings, …) with the rule the skill follows.
+- Skill `deal-screen`: warm and annual rent now → `fehlend` + note (was `geschaetzt`), in line
+  with the roadmap; starts from the `dealkit extract` scaffold; quotes verbatim in the original
+  language.
+- Optional extra `pdf` (pypdf); `*.pred.json` fixtures are gitignored.
+- Tests with synthetic mini-fixtures under `tests/data/extraction/`.
+
 ## 0.1.0 – 2026-10-10
 
 - Initial skeleton (stage 0 of the roadmap).
