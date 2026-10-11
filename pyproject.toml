@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dealkit"
-version = "0.1.0"
+version = "0.2.0.dev0"
 description = "Evidence-based real-estate deal screening with a human gate – deterministic valuation engine, evidence schemas, market profiles and red-flag checklists."
 readme = "README.md"
 license = "MIT"
@@ -29,7 +29,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.5"]
+pdf = ["pypdf>=4"]
+dev = ["pytest>=8", "ruff>=0.5", "pypdf>=4"]
 
 [project.scripts]
 dealkit = "dealkit.cli:main"

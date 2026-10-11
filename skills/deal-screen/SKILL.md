@@ -23,18 +23,26 @@ Portal blockiert, den User um den Inserattext oder das PDF bitten. **Nie Werte a
 Gedächtnis ergänzen.**
 
 ### 2. Objektprofil extrahieren (listing.json)
-Schema: `schemas/listing.schema.json`. Regeln:
+Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
+`docs/EXTRACTION_ERRORS.md` (massgeblich, auch für die Gold-Dateien des Evals).
+- Mit dem Gerüst beginnen: `dealkit extract <datei> --type <TYP> --out listing.json`
+  (Dateiname mit Präfix `de-`/`ch-`/`al-`/`me-`/`rs-` oder `--market`). Es setzt id, market,
+  Red-Flag-Liste (`offen`) und alle Felder auf `fehlend`. Felder füllen, keines löschen.
 - Jeder Wert ist ein Evidenz-Objekt `{value, status, source}`.
-- `belegt` **nur** mit wörtlichem `quote` aus der Quelle. Preisbereiche, Projektseiten oder
-  mehrere Preise → nicht übernehmen, `fehlend` setzen und den Konflikt in `notes` festhalten.
-- Miete: nur Nettokaltmiete als `monthly_rent`. Warmmiete, Jahresmiete oder «mögliche Miete»
-  → `geschaetzt` mit Note. Bei Kurzzeitvermietung (AL/ME) den Block `operating.short_term_rental`
-  füllen und `monthly_rent` auf `fehlend` lassen – das Profil leitet ab.
+- `belegt` **nur** mit wörtlichem `quote` aus der Quelle: ein zusammenhängender Ausschnitt,
+  in Originalsprache (AL: Albanisch), Zahlen unverändert, ohne «…».
+- **Falsche Grösse → `fehlend` + Note; richtige Grösse als Prognose → `geschaetzt`.**
+  Preisbereiche, Projektseiten, mehrere oder widersprüchliche Werte → `fehlend`.
+- Miete: nur Nettokaltmiete als `monthly_rent`. Warmmiete oder Jahresmiete → `fehlend`,
+  Wert und mögliche Umrechnung in `source.note` (nicht selbst umrechnen). «Erzielbare» oder
+  «mögliche» Miete → `geschaetzt` mit Note. Bei Kurzzeitvermietung (AL/ME) den Block
+  `operating.short_term_rental` füllen und `monthly_rent` auf `fehlend` lassen – das Profil leitet ab.
+- Fläche: nur Wohnfläche netto; nur Brutto-/Nutzfläche → `fehlend` + Note.
+- Notes auf Deutsch; keine Namen, Telefonnummern oder E-Mails privater Verkäufer übernehmen.
 - Quellenstufe ehrlich setzen: Portal/Makler-Angaben sind `portal`/`makler`, nie `amtlich`.
 - `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste).
-- Red-Flag-Liste mit `dealkit checklist <MARKT> --type <TYP>` holen und als `red_flags`
-  mit `state: offen` einfügen. Nur Punkte auf `geprueft_ok`/`geprueft_risiko` setzen, die der
-  User ausdrücklich bestätigt hat.
+- Red Flags stehen im Gerüst (sonst `dealkit checklist <MARKT> --type <TYP>`). Nur Punkte auf
+  `geprueft_ok`/`geprueft_risiko` setzen, die der User ausdrücklich bestätigt hat.
 
 ### 3. Validieren und screenen
 ```

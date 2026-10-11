@@ -1,0 +1,12 @@
+{
+  "id": "de-synth-korrekt",
+  "market": "DE",
+  "captured_at": "2026-10-11T08:00:00Z",
+  "source": { "kind": "portal", "url": "https://example.invalid/de-synth-korrekt", "listing_title": "SYNTHETISCH" },
+  "core": {
+    "purchase_price": { "value": 175000, "status": "belegt", "source": { "kind": "portal", "quote": "Kaufpreis: 175.000 EUR" } },
+    "living_area_m2": { "value": 58.5, "status": "belegt", "source": { "kind": "portal", "quote": "Wohnfläche: ca. 58,5 m²" } },
+    "monthly_rent": { "value": 600, "status": "belegt", "source": { "kind": "portal", "quote": "Nettokaltmiete: 600 EUR" } },
+    "currency": "EUR"
+  }
+}

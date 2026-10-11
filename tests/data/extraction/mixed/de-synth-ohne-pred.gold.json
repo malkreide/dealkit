@@ -1,0 +1,11 @@
+{
+  "id": "de-synth-ohne-pred",
+  "market": "DE",
+  "captured_at": "2026-10-11T08:00:00Z",
+  "source": { "kind": "portal", "listing_title": "SYNTHETISCH" },
+  "core": {
+    "purchase_price": { "value": 120000, "status": "belegt", "source": { "kind": "portal", "quote": "Kaufpreis: 120.000 €" } },
+    "living_area_m2": { "value": null, "status": "fehlend", "source": { "kind": "portal" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "portal" } }
+  }
+}

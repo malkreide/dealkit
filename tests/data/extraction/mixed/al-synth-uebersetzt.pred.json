@@ -1,0 +1,12 @@
+{
+  "id": "al-synth-uebersetzt",
+  "market": "AL",
+  "captured_at": "2026-10-11T09:00:00Z",
+  "source": { "kind": "makler" },
+  "core": {
+    "purchase_price": { "value": 85000, "status": "belegt", "source": { "kind": "makler", "quote": "Preis: 85.000 €" } },
+    "living_area_m2": { "value": null, "status": "fehlend", "source": { "kind": "makler", "note": "neto/bruto unklar" } },
+    "monthly_rent": { "value": null, "status": "fehlend", "source": { "kind": "makler" } },
+    "currency": "EUR"
+  }
+}
