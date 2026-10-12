@@ -1,0 +1,43 @@
+{
+  "id": "mk-skopje-kiselavoda-12",
+  "market": "MK",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://level.mk/en/property/apartment-sale-skopje-40m2-7/",
+    "documents": [
+      "mk-skopje-kiselavoda-12.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 80000,
+      "status": "belegt",
+      "source": {
+        "kind": "makler",
+        "quote": "Kaufpreis: 80’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 40,
+      "status": "belegt",
+      "source": {
+        "kind": "makler",
+        "quote": "Wohnfläche: 40 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "makler",
+        "note": "Keine Mietangabe im Text"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

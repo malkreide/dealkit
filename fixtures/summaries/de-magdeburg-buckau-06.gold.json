@@ -1,0 +1,44 @@
+{
+  "id": "de-magdeburg-buckau-06",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immobilienscout24.de/expose/171554362",
+    "documents": [
+      "de-magdeburg-buckau-06.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 145000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Zuletzt angegebener Kaufpreis: 145’000 EUR",
+        "note": "Inserat 410 Gone; Wert aus Suchindex"
+      }
+    },
+    "living_area_m2": {
+      "value": 67.66,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 67,66 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Mietverhältnis endet 31.10.2026; Miethöhe nicht angegeben"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

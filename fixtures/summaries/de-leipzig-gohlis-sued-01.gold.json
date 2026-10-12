@@ -1,0 +1,44 @@
+{
+  "id": "de-leipzig-gohlis-sued-01",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immowelt.de/expose/dcd8ea0b-e2e0-4d4f-b9f4-02ac2f04cf7c",
+    "documents": [
+      "de-leipzig-gohlis-sued-01.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 150000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 150’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 52.5,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 52,5 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe (bezugsfrei); erzielbare Miete separat belegen",
+        "quote": "Eine konkrete Mietangabe fehlt."
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

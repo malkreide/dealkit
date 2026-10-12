@@ -1,0 +1,44 @@
+{
+  "id": "rs-petrovaradin-15",
+  "market": "RS",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.solis-nekretnine.com/stan-petrovaradin-centar-jednosoban/sr/1051896/",
+    "documents": [
+      "rs-petrovaradin-15.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 89380,
+      "status": "belegt",
+      "source": {
+        "kind": "makler",
+        "quote": "Kaufpreis: 89’380 EUR",
+        "note": "Neubau nicht fertiggestellt, nicht im Grundbuch; zzgl. 3 % Vermittlungsgebühr"
+      }
+    },
+    "living_area_m2": {
+      "value": 32,
+      "status": "belegt",
+      "source": {
+        "kind": "makler",
+        "quote": "Wohnfläche: rund 32 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "makler",
+        "note": "Keine Mietangabe im Text"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "neubau_projekt"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

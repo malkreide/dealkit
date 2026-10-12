@@ -1,0 +1,43 @@
+{
+  "id": "at-graz-geidorf-07",
+  "market": "AT",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.willhaben.at/iad/immobilien/d/eigentumswohnung/steiermark/graz/ideal-fuer-eigennutzer-anleger-attraktive-2-zimmer-wohnung-mit-balkon-in-geidorf-1286254601/",
+    "documents": [
+      "at-graz-geidorf-07.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 149000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 149’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 48,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 48 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Text"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

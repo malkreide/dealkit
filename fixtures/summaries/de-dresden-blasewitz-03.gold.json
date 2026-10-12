@@ -1,0 +1,44 @@
+{
+  "id": "de-dresden-blasewitz-03",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immowelt.de/expose/1f288aa0-cc77-45c0-a2d4-fb8e40e850f2",
+    "documents": [
+      "de-dresden-blasewitz-03.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 130000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 130’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 37,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 37 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": 492,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "zusammen 492 EUR",
+        "note": "Wohnung 446 EUR + mitverkaufter Stellplatz 46 EUR; kalt/warm nicht ausgewiesen"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

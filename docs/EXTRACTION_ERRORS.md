@@ -157,6 +157,27 @@ Ein Eval ist nur so gut wie seine Fixtures. Zwei Lücken der aktuellen Auswahl (
 - **Kein CH-Inserat.** Schweizer Zahlenformate («1'250'000.–»), Nettowohnfläche und
   Mietzins-Begriffe (Klassen 2, 5, 7) sind ungetestet.
 
+## Ergebnisse
+
+| Datum | Fixtures | Ergebnis | Einordnung |
+|---|---|---|---|
+| 12.10.2026 | `fixtures/summaries/` (20, Zusammenfassungen) | 20/20 korrekt, Gate OK, keine Warnung | Regeltest, **nicht** das Stufe-1-Gate (siehe unten) |
+
+**Wie belastbar sind die 20/20?** Der Kandidat wurde von einem separaten Agenten ohne
+Zugriff auf das Gold erzeugt, nur aus Quelltext, Skill und diesem Dokument. Ein
+Mutationstest mit drei typischen Fehlern (umgerechnete Jahresmiete, Preisfeld trotz
+Widerspruch, EUR-Umrechnung mit erfundenem Zitat) wurde vollständig erkannt (Exit 1).
+Trotzdem sagt das Ergebnis wenig über echte Inserate:
+
+- Die Zusammenfassungen sind deutsch und vorstrukturiert («Kaufpreis: … · Wohnfläche: …»);
+  Konflikte sind ausformuliert («widersprechen sich»), statt versteckt.
+- Die Regeln wurden am selben Tag anhand genau dieser Grenzfälle geschärft; der Test
+  bestätigt, dass sie **eindeutig formuliert** sind, nicht, dass sie auf neue Fälle tragen.
+- Gold-Entwurf, Regeltexte und Kandidat stammen aus derselben Modellfamilie; nur die vier
+  Grenzfälle hat ein Mensch entschieden.
+
+Aussagekräftig wird erst der Lauf auf Originaltexten in `fixtures/listings/`.
+
 ## Eval-Klassen (Referenz)
 
 | Klasse | Schwere | Bedeutung |

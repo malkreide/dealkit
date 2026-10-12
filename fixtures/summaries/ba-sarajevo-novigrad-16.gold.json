@@ -1,0 +1,44 @@
+{
+  "id": "ba-sarajevo-novigrad-16",
+  "market": "BA",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://doma.ba/nekretnina/sarajevo-cbd3o9qo-680364-5s1v",
+    "documents": [
+      "ba-sarajevo-novigrad-16.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 142000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 142’000 KM",
+        "note": "Währung BAM; EUR-Umrechnung im Text (ungefähr 72’600 EUR) nicht übernommen"
+      }
+    },
+    "living_area_m2": {
+      "value": 33,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 33 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Text"
+      }
+    },
+    "currency": "BAM"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

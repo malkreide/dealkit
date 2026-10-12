@@ -1,0 +1,45 @@
+{
+  "id": "de-halle-boellberg-04",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immowelt.de/expose/4216a8b5-80c5-4211-add3-e036ec4c9ee2",
+    "documents": [
+      "de-halle-boellberg-04.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 120000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 120’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 63.4,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 63,4 m²",
+        "note": "Text: ungefähr 65 m² (Abweichung 2,5 %, unter 5 %)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Jahresmiete inkl. Stellplatz; 6’600/12 = 550 EUR/Monat, falls bestätigt",
+        "quote": "Jahreskaltmiete inklusive Stellplatz 6’600 EUR"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

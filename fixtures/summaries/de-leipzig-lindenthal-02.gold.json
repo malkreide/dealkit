@@ -1,0 +1,44 @@
+{
+  "id": "de-leipzig-lindenthal-02",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immowelt.at/expose/dfd2f578-5683-4193-94d2-80efb5b37fa2",
+    "documents": [
+      "de-leipzig-lindenthal-02.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 140000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 140’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 54.9,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 54,9 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Jahresmiete (Ist 5’424 EUR/Jahr ≈ 452 EUR/Monat); Soll-Miete und Beschreibungstext weichen ab, Status «vermietet» vs. «frei ab 01.11.2026» widersprüchlich; Stellplatzanteil unbekannt",
+        "quote": "Das Preisfeld nennt 5’424 EUR jährliche Ist-Miete und 7’260,96 EUR Soll-Miete."
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

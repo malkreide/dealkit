@@ -1,0 +1,46 @@
+{
+  "id": "at-klagenfurt-zentrum-11",
+  "market": "AT",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.willhaben.at/iad/immobilien/d/eigentumswohnung/kaernten/klagenfurt/moderne-singlewohnung-mit-balkon-im-zentrum-von-klagenfurt-zu-verkaufen-1472516466/",
+    "documents": [
+      "at-klagenfurt-zentrum-11.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 129000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Zuletzt angegebener Kaufpreis: 129’000 EUR",
+        "note": "Anzeige abgelaufen; Wert aus Suchindex"
+      }
+    },
+    "living_area_m2": {
+      "value": 27,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Fläche: 27 m² im Datenfeld",
+        "note": "Text: 28 m² (Abweichung 3,7 %, unter 5 %)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Bruttomiete (AT: inkl. Betriebskosten/USt), befristet; Nettomiete nicht angegeben",
+        "quote": "570 EUR brutto monatlich"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}
