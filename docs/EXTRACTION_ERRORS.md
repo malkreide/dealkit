@@ -5,10 +5,11 @@ damit die Erfassungsregel für die Gold-Dateien. Das Eval (`scripts/eval_extract
 vergleicht den Status **exakt** – eine Regel, die Gold und Skill unterschiedlich auslegen,
 erscheint als Fehler, auch wenn beide «vernünftig» sind.
 
-> **Stand 11.10.2026:** Die Klassen sind *erwartet*, nicht beobachtet. Zum Zeitpunkt der
-> Erstellung lagen in `fixtures/listings/` noch keine Inserate. Nach dem ersten Eval-Lauf
-> mit den 20 Fixtures die Spalte «beobachtet» nachführen und Regeln, die nicht tragen,
-> hier ändern – nicht stillschweigend im Gold.
+> **Stand 11.10.2026:** Die Klassen sind *erwartet*, nicht an Originalinseraten beobachtet.
+> Die Fixture-Auswahl steht (`fixtures/listings/MANIFEST.md`); die Klassen 14–16 und der
+> Abschnitt «Abdeckung» stützen sich auf deren Shortlist, nicht auf die Inserate selbst.
+> Nach dem ersten Eval-Lauf je Klasse die Häufigkeit nachführen und Regeln, die nicht
+> tragen, hier ändern – nicht stillschweigend im Gold.
 
 ## Grundregel
 
@@ -125,6 +126,21 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 | 11 | Zitat nicht wörtlich | paraphrasiert, mit «…» gekürzt, aus zwei Stellen zusammengesetzt | ein zusammenhängender Ausschnitt; im Zweifel länger zitieren | `zitat_nicht_gefunden` (Gate) |
 | 12 | PDF-Textschicht | Spaltensatz, Silbentrennung «Woh-nfläche», Tabellen, Scan ohne Text | Für das Eval eine bereinigte `<name>.txt` neben das PDF legen (hat Vorrang); Scans ohne Textschicht sind kein Fixture | `zitat_nicht_gefunden`, `gold_zitat_nicht_gefunden` |
 | 13 | Personendaten | Name, Telefon, E-Mail privater Verkäufer im Zitat oder in der Note | weglassen; Zitat so wählen, dass es keine enthält | Warnung `pii_verdacht` |
+| 14 | Fremdwährung | BA «142.000 KM», MK «денари»/MKD, Plattform zeigt zusätzlich eine EUR-Umrechnung | Preis in der Währung, in der er inseriert ist, `core.currency` entsprechend (`BAM`, `MKD`). Umrechnungen der Plattform oder eigene nie als `belegt`, höchstens in die Note | `waehrung_abweichung` |
+| 15 | Kyrillische Schrift | BG, MK, teils RS (ćirilica) | Zitat in Originalschrift, keine Transliteration; Notes auf Deutsch. BG: «застроена площ» ist brutto (inkl. Anteil Gemeinschaftsflächen), «чиста площ» netto → Klasse 5 | `zitat_nicht_gefunden`, `wert_abweichung` |
+| 16 | Anbieteraussage als Prüfbefund | «uknjižen» (RS/BA), «Eigentumszertifikat vorhanden» (AL), «Akt 16» (BG), «grundbuchlich eingetragen» | Fakt fürs Objektprofil höchstens als `note`; zugehörige Red Flag bleibt `offen`, bis ein Dokument vorliegt | (nicht im Eval; Red-Flag-Review) |
+
+## Abdeckung
+
+Ein Eval ist nur so gut wie seine Fixtures. Zwei Lücken der aktuellen Auswahl (Manifest):
+
+- **Miete ist kaum vertreten.** Nur 2–3 der 20 Inserate nennen überhaupt eine Miete. Steht
+  sie in Gold und Kandidat auf `fehlend`, zählt das als korrekt – die 90-%-Hürde wird so
+  leicht erreichbar, während die fehleranfälligste Extraktion (Klassen 2, 3, 8) kaum geprüft
+  wird. Für das Gate zusätzlich die Quote **nur über Fixtures mit Mietangabe** ausweisen
+  oder vermietete Kapitalanlagen nachliefern.
+- **Kein CH-Inserat.** Schweizer Zahlenformate («1'250'000.–»), Nettowohnfläche und
+  Mietzins-Begriffe (Klassen 2, 5, 7) sind ungetestet.
 
 ## Eval-Klassen (Referenz)
 
@@ -142,6 +158,7 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 | `wert_abweichung` | fehler | Abweichung > 1 % |
 | `faktor_12`, `faktor_1000`, `faktor_10` | fehler | Abweichung um diesen Faktor (Jahres-/Monatsmiete, Tausendertrennzeichen, alte Lek oder Komma) |
 | `wert_typ` | fehler | Wert ist keine Zahl |
+| `waehrung_abweichung` | fehler | `core.currency` verschieden; Preis und Miete gelten als falsch |
 | `wert_nicht_im_zitat` | warnung | Zitat gefunden, zeigt aber den extrahierten Wert nicht |
 | `pii_verdacht` | warnung | E-Mail oder Telefonnummer in Gold oder Kandidat |
 

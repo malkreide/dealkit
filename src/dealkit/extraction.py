@@ -19,13 +19,13 @@ from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 
-from .profiles import get_profile
+from .profiles import ALL_MARKETS, market_currency
 from .redflags import checklist
 from .schema import SCHEMA_DIR, validate
 
 CORE_FIELDS = ("purchase_price", "living_area_m2", "monthly_rent")
 TOLERANCE = 0.01  # ±1 % on core values
-MARKET_PREFIX = re.compile(r"^(de|ch|al|me|rs)-", re.IGNORECASE)
+MARKET_PREFIX = re.compile(rf"^({'|'.join(m.lower() for m in ALL_MARKETS)})-", re.IGNORECASE)
 SCAFFOLD_NOTE = "Gerüst: noch nicht extrahiert"
 
 # Listing source kinds that are not evidence source kinds.
@@ -70,7 +70,8 @@ def scaffold(
     """Build an empty, schema-valid listing for a source file. Reads no content."""
     market = market or market_from_filename(path)
     if market is None:
-        raise ValueError(f"Markt nicht aus Dateiname ableitbar ({Path(path).name}); Präfix de-/ch-/al-/me-/rs- oder --market angeben")
+        prefixes = "/".join(f"{m.lower()}-" for m in ALL_MARKETS)
+        raise ValueError(f"Markt nicht aus Dateiname ableitbar ({Path(path).name}); Präfix {prefixes} oder --market angeben")
     kind = _EVIDENCE_KIND.get(source_kind, source_kind)
     now = now or datetime.now(UTC)
     source = {"kind": source_kind, "documents": [Path(path).name]}
@@ -86,7 +87,7 @@ def scaffold(
         "captured_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": source,
         "address": {"country": market},
-        "core": {**{k: _missing(kind) for k in CORE_FIELDS}, "currency": get_profile(market).currency},
+        "core": {**{k: _missing(kind) for k in CORE_FIELDS}, "currency": market_currency(market)},
         "object": obj,
         "red_flags": [{"id": c.id, "state": "offen"} for c in checklist(market, object_type)],
     }
@@ -305,6 +306,13 @@ def compare(name: str, gold: dict, pred: dict | None, source_text: str) -> Fixtu
         ok, fs = compare_field(name, f"core.{key}", (gold.get("core") or {}).get(key), (pred.get("core") or {}).get(key))
         res.fields[key] = ok
         res.findings += fs
+    # A price is only right in the right currency (BAM vs. EUR differ by ~1.96, not by a factor the value check sees).
+    g_cur, p_cur = (gold.get("core") or {}).get("currency", "EUR"), (pred.get("core") or {}).get("currency", "EUR")
+    if g_cur != p_cur:
+        res.findings.append(Finding(name, "core.currency", "waehrung_abweichung", ERROR, f"Gold {g_cur}, Kandidat {p_cur}"))
+        for key in ("purchase_price", "monthly_rent"):
+            if ((gold.get("core") or {}).get(key) or {}).get("status") != "fehlend":
+                res.fields[key] = False
     res.findings += check_quotes(name, pred, source_text)
     res.findings += check_value_in_quote(name, pred, source_text)
     res.findings += check_pii(name, pred, "pred")

@@ -10,8 +10,8 @@
     "id": { "type": "string", "description": "Stable identifier, e.g. 'de-leipzig-2026-0001'. Fingerprint for relisting detection lives in corpus, not here." },
     "market": {
       "type": "string",
-      "enum": ["DE", "CH", "AL", "ME", "RS"],
-      "description": "Market profile key. Decides cost model, checklist and currency."
+      "enum": ["DE", "CH", "AL", "ME", "RS", "AT", "MK", "BA", "BG", "HR"],
+      "description": "Market key. DE/CH/AL/ME/RS have a market profile (cost model, checklist, currency). AT/MK/BA/BG/HR are extraction-only: listings validate and enter the extraction eval, but screening is refused until a profile exists."
     },
     "captured_at": { "type": "string", "format": "date-time" },
     "source": {
@@ -46,7 +46,7 @@
         "purchase_price": { "$ref": "evidence.schema.json" },
         "living_area_m2": { "$ref": "evidence.schema.json" },
         "monthly_rent": { "$ref": "evidence.schema.json", "description": "Net cold rent per month (DE: Kaltmiete). For short-term-rental markets use operating.short_term_rental instead and set this to the long-term equivalent with status 'geschaetzt'." },
-        "currency": { "type": "string", "enum": ["EUR", "CHF", "ALL", "RSD"], "default": "EUR" }
+        "currency": { "type": "string", "enum": ["EUR", "CHF", "ALL", "RSD", "BAM", "MKD"], "default": "EUR" }
       }
     },
     "object": {

@@ -10,6 +10,7 @@ import click
 
 from . import __version__
 from .pipeline import render_markdown, screen
+from .profiles import ALL_MARKETS
 from .redflags import checklist
 from .schema import lint_listing, load, validate
 
@@ -43,7 +44,10 @@ def validate_cmd(path, kind):
 @click.option("--out", "-o", type=click.Path(), help="Write result to file instead of stdout")
 def screen_cmd(listing, mandate, fmt, out):
     """Screen one listing against a mandate and print the recommendation."""
-    doc = screen(load(listing), load(mandate))
+    try:
+        doc = screen(load(listing), load(mandate))
+    except ValueError as e:  # validation errors, extraction-only market
+        raise click.ClickException(str(e)) from e
     text = json.dumps(doc, indent=2, ensure_ascii=False) if fmt == "json" else render_markdown(doc)
     if out:
         Path(out).write_text(text, encoding="utf-8")
@@ -53,7 +57,7 @@ def screen_cmd(listing, mandate, fmt, out):
 
 
 @main.command("checklist")
-@click.argument("market", type=click.Choice(["DE", "CH", "AL", "ME", "RS"]))
+@click.argument("market", type=click.Choice(ALL_MARKETS))
 @click.option("--type", "obj_type", default=None, help="wohnung | haus | mfh | gewerbe | neubau_projekt")
 def checklist_cmd(market, obj_type):
     """Print the red-flag checklist for a market (to paste into a listing)."""
@@ -64,7 +68,7 @@ def checklist_cmd(market, obj_type):
 @main.command("extract")
 @click.argument("source", type=click.Path(exists=True, dir_okay=False))
 @click.option("--out", "-o", type=click.Path(dir_okay=False), help="Write scaffold to file instead of stdout")
-@click.option("--market", type=click.Choice(["DE", "CH", "AL", "ME", "RS"]), default=None, help="Override the market derived from the file-name prefix")
+@click.option("--market", type=click.Choice(ALL_MARKETS), default=None, help="Override the market derived from the file-name prefix")
 @click.option("--type", "obj_type", type=click.Choice(["wohnung", "haus", "mfh", "gewerbe", "neubau_projekt"]), default=None, help="Object type (filters the checklist)")
 @click.option("--source-kind", type=click.Choice(["portal", "makler", "expose", "offmarket", "nutzer"]), default="portal")
 @click.option("--url", default=None)

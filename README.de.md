@@ -22,7 +22,7 @@ hier strukturell durchgesetzt:
 | `schemas/listing.schema.json` | Objektprofil aus belegten Werten. |
 | `schemas/mandate.schema.json` | Investor-Mandat: Märkte, Kapital, Strategie, Limits, Beobachten-Trigger. Alles, was der Kompass fest eingebaut hatte, steht hier. |
 | `src/dealkit/model.py` | Deterministische Engine für Finanzierung, Cashflow, Zielpreis, Stresstest und 5/10/15-Jahre-Szenarien. Python-Port von `lib/model.ts`, auf den Euro genau rückgetestet. |
-| `src/dealkit/profiles.py` | Marktprofile: DE (Referenz), CH, AL, ME, RS (die letzten vier sind Stubs mit dokumentierten Annahmen). |
+| `src/dealkit/profiles.py` | Marktprofile: DE (Referenz), CH, AL, ME, RS (die letzten vier sind Stubs mit dokumentierten Annahmen). AT, MK, BA, BG, HR sind reine Extraktionsmärkte ohne Profil. |
 | `src/dealkit/redflags.py` | Due-Diligence-Checklisten je Markt. Die Engine listet und verfolgt sie; beantworten tun Menschen. Ein `blocker`-Befund überstimmt jeden Score. |
 | `src/dealkit/rules.py` | `kompass_v1` (Original-Score und Entscheidungstabelle für Backtests) und `dealkit_v1` (neu gefasste Regeln mit drei harten Übersteuerungen). |
 | `src/dealkit/cli.py` | `dealkit validate | screen | checklist | extract | backtest` |

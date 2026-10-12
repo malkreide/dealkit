@@ -8,8 +8,9 @@ Place raw listing texts here (gitignored). Gold files *.gold.json are committed.
 | `<name>.gold.json` | Hand-made, schema-valid `listing.json` – the expected extraction | committed |
 | `<name>.pred.json` | Candidate from the deal-screen skill | ignored |
 
-`<name>` starts with the market prefix `de-`, `al-` or `ch-` (also `me-`, `rs-`), e.g.
-`de-leipzig-reudnitz-01`.
+`<name>` starts with the market prefix (`de-`, `ch-`, `al-`, `me-`, `rs-`; extraction-only:
+`at-`, `mk-`, `ba-`, `bg-`, `hr-`), e.g. `de-leipzig-reudnitz-01`. The current selection with
+file names and source links is in [MANIFEST.md](MANIFEST.md).
 
 ## Workflow
 
