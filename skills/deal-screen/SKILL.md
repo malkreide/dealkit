@@ -33,11 +33,15 @@ Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
   in Originalsprache (AL: Albanisch), Zahlen unverändert, ohne «…».
 - **Falsche Grösse → `fehlend` + Note; richtige Grösse als Prognose → `geschaetzt`.**
   Preisbereiche, Projektseiten, mehrere oder widersprüchliche Werte → `fehlend`.
-- Miete: nur Nettokaltmiete als `monthly_rent`. Warmmiete oder Jahresmiete → `fehlend`,
-  Wert und mögliche Umrechnung in `source.note` (nicht selbst umrechnen). «Erzielbare» oder
-  «mögliche» Miete → `geschaetzt` mit Note. Bei Kurzzeitvermietung (AL/ME) den Block
+- Miete: nur Nettokaltmiete als `monthly_rent`. Warmmiete, Bruttomiete oder Jahresmiete →
+  `fehlend`, Wert und mögliche Umrechnung in `source.note` (nicht selbst umrechnen). «Miete»
+  ohne kalt/warm → `belegt` mit Note. Mitverkaufter Stellplatz: seine Miete zählt mit (Summe
+  nur `belegt`, wenn sie im Text steht). «Erzielbare» oder «mögliche» Miete → `geschaetzt`
+  mit Note; jährliche Zielmiete → `fehlend` (strengere Regel gilt). Bei Kurzzeitvermietung (AL/ME) den Block
   `operating.short_term_rental` füllen und `monthly_rent` auf `fehlend` lassen – das Profil leitet ab.
-- Fläche: nur Wohnfläche netto; nur Brutto-/Nutzfläche → `fehlend` + Note.
+- Fläche: nur Wohnfläche netto; nur Brutto-/Nutzfläche → `fehlend` + Note. «Fläche» ohne Zusatz
+  gilt als Wohnfläche, ausser AL/BG → `fehlend`. Datenfeld vs. Text ≤ 5 % → Datenfeld `belegt`.
+  Preis: Preisfeld und Text verschieden → `fehlend` + Note.
 - Notes auf Deutsch; keine Namen, Telefonnummern oder E-Mails privater Verkäufer übernehmen.
 - Quellenstufe ehrlich setzen: Portal/Makler-Angaben sind `portal`/`makler`, nie `amtlich`.
 - `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste).

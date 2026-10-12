@@ -400,3 +400,25 @@ def test_screen_refuses_extraction_only_market(tmp_path, gold):
     path.write_text(json.dumps(gold), encoding="utf-8")
     res = CliRunner().invoke(main, ["screen", str(path), "-m", str(ROOT / "examples" / "mandate.example.yaml")])
     assert res.exit_code == 1 and "extraction-only" in res.output
+
+
+# --- committed gold files ------------------------------------------------------
+
+GOLD_DIRS = [ROOT / "fixtures" / "summaries", ROOT / "fixtures" / "listings"]
+GOLD_FILES = sorted(p for d in GOLD_DIRS for p in d.glob("*.gold.json"))
+
+
+@pytest.mark.parametrize("path", GOLD_FILES, ids=lambda p: p.name)
+def test_committed_gold_is_consistent(path):
+    """Gold is schema-valid and every quote occurs in its source (skipped where the source is gitignored)."""
+    stem = path.name[: -len(".gold.json")]
+    source = next((path.parent / f"{stem}{ext}" for ext in (".txt", ".pdf") if (path.parent / f"{stem}{ext}").exists()), None)
+    if source is None:
+        pytest.skip("source text not committed")
+    gold = json.loads(path.read_text(encoding="utf-8"))
+    text = read_source_text(source)
+    r = compare(stem, gold, None, text)
+    assert [f for f in r.findings if f.severity in ("setup", "warnung")] == []
+    for key, node in gold["core"].items():
+        if isinstance(node, dict) and node["source"].get("quote"):
+            assert quote_in_source(node["source"]["quote"], text), key
