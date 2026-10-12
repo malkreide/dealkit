@@ -5,7 +5,9 @@ damit die Erfassungsregel für die Gold-Dateien. Das Eval (`scripts/eval_extract
 vergleicht den Status **exakt** – eine Regel, die Gold und Skill unterschiedlich auslegen,
 erscheint als Fehler, auch wenn beide «vernünftig» sind.
 
-> **Stand 11.10.2026:** Die Klassen sind *erwartet*, nicht an Originalinseraten beobachtet.
+> **Stand 12.10.2026:** Grenzfälle Stellplatzmiete, Flächen-Schwelle 5 % und BG-Flächen vom
+> Owner entschieden (Regeltest auf `fixtures/summaries/`).
+> Die Klassen sind *erwartet*, nicht an Originalinseraten beobachtet.
 > Die Fixture-Auswahl steht (`fixtures/listings/MANIFEST.md`); die Klassen 14–16 und der
 > Abschnitt «Abdeckung» stützen sich auf deren Shortlist, nicht auf die Inserate selbst.
 > Nach dem ersten Eval-Lauf je Klasse die Häufigkeit nachführen und Regeln, die nicht
@@ -22,7 +24,8 @@ erscheint als Fehler, auch wenn beide «vernünftig» sind.
 | Nichts | `fehlend` | `null` | – |
 
 **Falsche Grösse → `fehlend` + Note. Richtige Grösse als Prognose → `geschaetzt`.
-Richtige Grösse wörtlich → `belegt`.** Der Skill rechnet nicht um, auch wenn die
+Richtige Grösse wörtlich → `belegt`.** Treffen mehrere Regeln zu (z. B. jährliche Zielmiete:
+Prognose *und* falsche Grösse), gilt die strengere: `fehlend`. Der Skill rechnet nicht um, auch wenn die
 Umrechnung trivial scheint (÷ 12). Grund: Jede Umrechnung enthält eine Annahme (sind die
 4.320 € Jahresmiete netto kalt? enthält die Warmmiete Heizung?), und `fehlend` löst Regel 1
 aus (`daten_vervollstaendigen`). Damit bestätigt ein Mensch den Wert, bevor er die
@@ -62,6 +65,12 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 - **Regel:** Nur Nettokaltmiete (CH: Nettomietzins) geht in `monthly_rent`. Steht nur die
   Warmmiete → `fehlend` + Note «Warmmiete 780 €, NK unbekannt». Stehen beide → Kaltmiete
   `belegt`. Hausgeld gehört in `object.hoa_fee_monthly`.
+  «Miete» ohne Angabe kalt/warm gilt als Kaltmiete → `belegt`, Note «kalt/warm nicht
+  ausgewiesen» – ausser der Text sagt warm, brutto oder inkl. NK/Heizung (AT: «brutto»
+  enthält Betriebskosten und USt → `fehlend`).
+- **Stellplatz im Kaufgegenstand:** Gehört ein Stellplatz zum Kaufpreis, zählt seine Miete
+  zur `monthly_rent`. `belegt` ist die Summe nur, wenn sie im Text steht («zusammen
+  492 EUR»); sonst die Wohnungsmiete `belegt` und die Stellplatzmiete in die Note.
 - **Im Eval sichtbar als:** `konflikt_uebergangen` oder – wenn Gold die Kaltmiete hat –
   `wert_abweichung` mit typischerweise +15 bis +40 %.
 
@@ -98,6 +107,12 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
   Nettowohnfläche, AL: neto). Stehen netto und brutto → netto `belegt`, brutto in die Note.
   Steht nur eine Brutto-, Nutz- oder Gesamtfläche, oder ist bei AL unklar, welche gemeint
   ist → `fehlend` + Note mit dem Wert. «ca. 58,5 m²» ist eine Wohnflächenangabe → `belegt`.
+- **Bezeichnung:** Massgeblich ist das Wort im Quelltext. «Wohnfläche» → `belegt`.
+  «Fläche» ohne Zusatz gilt als Wohnfläche, ausser in Märkten mit Brutto-Konvention
+  (AL, BG) → `fehlend` + Note.
+- **Datenfeld vs. Text:** Weichen zwei Flächenangaben um höchstens 5 % voneinander ab
+  (Rundung, «ungefähr»), ist das kein Widerspruch: Wert aus dem strukturierten Datenfeld
+  `belegt`, der andere in die Note. Über 5 % → Klasse 10.
 - **Im Eval sichtbar als:** `wert_abweichung` (+10 bis +25 %), `konflikt_uebergangen`.
 
 ### 6. Fremdsprache (AL)
@@ -122,7 +137,7 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 | 7 | Zahlenformat | «175.000» (DE) vs. «175,000» (EN), «1'250'000.–» (CH), «1,25 Mio.» | Wert korrekt lesen, Zitat unverändert | `faktor_1000`, `zitat_nicht_gefunden` bei umformatiertem Zitat |
 | 8 | Soll- statt Ist-Miete | «erzielbar», «Marktmiete», «nach Sanierung», «Mietpotenzial» | `geschaetzt` (`source.kind` makler/portal) + Note; bei leerstehendem Objekt ohne solche Angabe `fehlend` | `status_abweichung` |
 | 9 | Kurzzeitvermietung (AL/ME) | Tagespreise, «Airbnb-Ertrag», Saisonauslastung | `monthly_rent` `fehlend`; Werte in `operating.short_term_rental` (Makleraussagen → `geschaetzt`) | `konflikt_uebergangen` |
-| 10 | Widerspruch im selben Inserat | Titel «75 m²», Text «72 m²»; alter und neuer Preis | `fehlend` + Note mit beiden Werten; eine ausdrückliche Preissenkung («jetzt 169.000 € statt 179.000 €») ist kein Widerspruch → neuer Preis `belegt`, alter in `market_context.price_history` | `konflikt_uebergangen`, `wert_abweichung` |
+| 10 | Widerspruch im selben Inserat | Titel «75 m²», Text «72 m²»; Preisfeld und Text nennen verschiedene Preise | `fehlend` + Note mit beiden Werten. Fläche: bis 5 % Abweichung kein Widerspruch (Klasse 5). Preis: jede Abweichung ist ein Widerspruch, meist eine unbestätigte Preisänderung; eine ausdrückliche Preissenkung («jetzt 169.000 € statt 179.000 €») ist kein Widerspruch → neuer Preis `belegt`, alter in `market_context.price_history` | `konflikt_uebergangen`, `wert_abweichung` |
 | 11 | Zitat nicht wörtlich | paraphrasiert, mit «…» gekürzt, aus zwei Stellen zusammengesetzt | ein zusammenhängender Ausschnitt; im Zweifel länger zitieren | `zitat_nicht_gefunden` (Gate) |
 | 12 | PDF-Textschicht | Spaltensatz, Silbentrennung «Woh-nfläche», Tabellen, Scan ohne Text | Für das Eval eine bereinigte `<name>.txt` neben das PDF legen (hat Vorrang); Scans ohne Textschicht sind kein Fixture | `zitat_nicht_gefunden`, `gold_zitat_nicht_gefunden` |
 | 13 | Personendaten | Name, Telefon, E-Mail privater Verkäufer im Zitat oder in der Note | weglassen; Zitat so wählen, dass es keine enthält | Warnung `pii_verdacht` |
@@ -141,6 +156,27 @@ Ein Eval ist nur so gut wie seine Fixtures. Zwei Lücken der aktuellen Auswahl (
   oder vermietete Kapitalanlagen nachliefern.
 - **Kein CH-Inserat.** Schweizer Zahlenformate («1'250'000.–»), Nettowohnfläche und
   Mietzins-Begriffe (Klassen 2, 5, 7) sind ungetestet.
+
+## Ergebnisse
+
+| Datum | Fixtures | Ergebnis | Einordnung |
+|---|---|---|---|
+| 12.10.2026 | `fixtures/summaries/` (20, Zusammenfassungen) | 20/20 korrekt, Gate OK, keine Warnung | Regeltest, **nicht** das Stufe-1-Gate (siehe unten) |
+
+**Wie belastbar sind die 20/20?** Der Kandidat wurde von einem separaten Agenten ohne
+Zugriff auf das Gold erzeugt, nur aus Quelltext, Skill und diesem Dokument. Ein
+Mutationstest mit drei typischen Fehlern (umgerechnete Jahresmiete, Preisfeld trotz
+Widerspruch, EUR-Umrechnung mit erfundenem Zitat) wurde vollständig erkannt (Exit 1).
+Trotzdem sagt das Ergebnis wenig über echte Inserate:
+
+- Die Zusammenfassungen sind deutsch und vorstrukturiert («Kaufpreis: … · Wohnfläche: …»);
+  Konflikte sind ausformuliert («widersprechen sich»), statt versteckt.
+- Die Regeln wurden am selben Tag anhand genau dieser Grenzfälle geschärft; der Test
+  bestätigt, dass sie **eindeutig formuliert** sind, nicht, dass sie auf neue Fälle tragen.
+- Gold-Entwurf, Regeltexte und Kandidat stammen aus derselben Modellfamilie; nur die vier
+  Grenzfälle hat ein Mensch entschieden.
+
+Aussagekräftig wird erst der Lauf auf Originaltexten in `fixtures/listings/`.
 
 ## Eval-Klassen (Referenz)
 

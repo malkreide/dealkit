@@ -1,0 +1,44 @@
+{
+  "id": "de-magdeburg-altneustadt-05",
+  "market": "DE",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immowelt.de/expose/e52e3d08-309b-431d-be95-b34fe2647b7f",
+    "documents": [
+      "de-magdeburg-altneustadt-05.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 150000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 150’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 100.28,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 100,28 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Soll-Miete nach Modernisierung und Jahreswert (800 EUR/Monat); keine bestehende Miete – strengere Regel: fehlend",
+        "quote": "9’600 EUR jährliche Zielmiete nach Modernisierung"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}

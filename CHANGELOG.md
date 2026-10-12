@@ -26,6 +26,12 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
 - Eval compares `core.currency` (`waehrung_abweichung`): a price in the wrong currency is wrong.
 - `fixtures/listings/MANIFEST.md`: the 20 selected listings with file names and source links
   (texts still to be supplied); error classes 14–16 and a coverage section in `EXTRACTION_ERRORS.md`.
+- `fixtures/summaries/`: rule test on the owner's summaries of the 20 listings (not original texts,
+  so not the stage-1 gate): 20 source texts and gold files; edge cases decided by the owner.
+  New rules: area field vs. text within 5 % is no conflict; price field vs. text always is;
+  unqualified «Fläche» counts as living area except in AL/BG; rent of a co-sold parking space
+  counts; «Miete» without cold/warm is `belegt` with a note; the stricter rule wins.
+- CI checks that every committed gold file is schema-valid and its quotes occur in its source.
 
 ## 0.1.0 – 2026-10-10
 

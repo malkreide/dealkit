@@ -1,0 +1,43 @@
+{
+  "id": "at-graz-westen-09",
+  "market": "AT",
+  "captured_at": "2026-10-12T00:00:00Z",
+  "source": {
+    "kind": "nutzer",
+    "url": "https://www.immobilienscout24.at/expose/6a880e704feed8e8f3ec91b0",
+    "documents": [
+      "at-graz-westen-09.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 152000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis: 152’000 EUR"
+      }
+    },
+    "living_area_m2": {
+      "value": 53,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche: 53 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Text"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Regeltest auf Zusammenfassung vom 12.10.2026); Grenzfälle vom Owner entschieden."
+}
