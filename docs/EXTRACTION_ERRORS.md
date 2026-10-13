@@ -5,13 +5,13 @@ damit die Erfassungsregel für die Gold-Dateien. Das Eval (`scripts/eval_extract
 vergleicht den Status **exakt** – eine Regel, die Gold und Skill unterschiedlich auslegen,
 erscheint als Fehler, auch wenn beide «vernünftig» sind.
 
-> **Stand 12.10.2026:** Grenzfälle Stellplatzmiete, Flächen-Schwelle 5 % und BG-Flächen vom
-> Owner entschieden (Regeltest auf `fixtures/summaries/`).
-> Die Klassen sind *erwartet*, nicht an Originalinseraten beobachtet.
-> Die Fixture-Auswahl steht (`fixtures/listings/MANIFEST.md`); die Klassen 14–16 und der
-> Abschnitt «Abdeckung» stützen sich auf deren Shortlist, nicht auf die Inserate selbst.
-> Nach dem ersten Eval-Lauf je Klasse die Häufigkeit nachführen und Regeln, die nicht
-> tragen, hier ändern – nicht stillschweigend im Gold.
+> **Stand 13.10.2026:** Grenzfälle Stellplatzmiete, Flächen-Schwelle 5 % und BG-Flächen vom
+> Owner entschieden (Regeltest auf `fixtures/summaries/`, 12.10.); gerundetes Datenfeld,
+> Flächenbezeichnung ohne Zusatz ausserhalb AL/BG und Sprachfassung des Portals am
+> 13.10. auf Originaltexten (`fixtures/listings/`, 12 von 20 Inseraten abrufbar).
+> Die Klassen 1–3, 8 und 9 sind weiterhin nur *erwartet*: Keines der 12 Originalinserate
+> nennt eine Miete (siehe «Abdeckung» und «Ergebnisse»).
+> Regeln, die nicht tragen, hier ändern – nicht stillschweigend im Gold.
 
 ## Grundregel
 
@@ -42,6 +42,13 @@ Stellen, keine Übersetzung, keine umformatierten Zahlen. Das Eval toleriert nur
 Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicode-NFKC
 (PDF-Ligaturen, `m²` = `m2`).
 
+**Sprachfassung des Portals:** Quelltext ist die Seite, wie sie abgerufen wurde. Liefert das
+Portal eine andere Sprachfassung als die Landessprache (z. B. englische Oberfläche mit
+Beschreibung in der Landessprache), werden Labels und Zahlenformat der Oberfläche wörtlich
+zitiert («Living area 58 m²», «1,250,000 KM»): nicht in die Landessprache zurückübersetzen,
+nicht ins lokale Zahlenformat umschreiben. Das Label der Oberfläche gilt als Bezeichnung
+im Sinne von Klasse 5. Die Sprachfassung wird im Manifest vermerkt.
+
 ## Fehlklassen
 
 ### 1. Preisbereich, «ab»-Preis, Preis auf Anfrage
@@ -53,7 +60,9 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
   «VB» (Verhandlungsbasis) oder «Richtpreis» ist ein Angebotspreis → `belegt`.
 - **Grenzfall:** Kaufpreis plus separat ausgewiesener Stellplatz/Inventar («zzgl.
   TG-Stellplatz 15.000 €») → Preis der Einheit `belegt`, Zusatzkosten in die Note.
-  Wird nur ein Gesamtpreis inklusive Stellplatz genannt, gilt dieser.
+  Wird nur ein Gesamtpreis inklusive Stellplatz genannt, gilt dieser. Ebenso eine separat
+  ausgewiesene Provision oder Gebühr («zzgl. 3 % Provision», RS «+ 3% posrednička
+  naknada»): Preis `belegt`, Provision in die Note.
 - **Im Eval sichtbar als:** `konflikt_uebergangen` (Skill hat einen Bereichswert
   übernommen), `wert_abweichung` (Unter- oder Obergrenze statt `fehlend`).
 
@@ -61,7 +70,9 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 
 - **Merkmale:** DE «Warmmiete», «Gesamtmiete», «Bruttomiete», «Miete inkl. NK»; CH
   «Mietzins inkl. NK», «Bruttomiete», «Miete inkl. Nebenkosten-Akonto».
-  Verwandt: **Hausgeld** (DE) oder **Nebenkosten STWE** (CH) sind Eigentümerkosten, nie Miete.
+  Verwandt: **Hausgeld** (DE), **Nebenkosten STWE** (CH) sowie AT «Monatliche Kosten»,
+  «Betriebskosten», «Reparaturrücklage» bei Eigentumswohnungen sind Eigentümerkosten,
+  nie Miete.
 - **Regel:** Nur Nettokaltmiete (CH: Nettomietzins) geht in `monthly_rent`. Steht nur die
   Warmmiete → `fehlend` + Note «Warmmiete 780 €, NK unbekannt». Stehen beide → Kaltmiete
   `belegt`. Hausgeld gehört in `object.hoa_fee_monthly`.
@@ -108,11 +119,17 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
   Steht nur eine Brutto-, Nutz- oder Gesamtfläche, oder ist bei AL unklar, welche gemeint
   ist → `fehlend` + Note mit dem Wert. «ca. 58,5 m²» ist eine Wohnflächenangabe → `belegt`.
 - **Bezeichnung:** Massgeblich ist das Wort im Quelltext. «Wohnfläche» → `belegt`.
-  «Fläche» ohne Zusatz gilt als Wohnfläche, ausser in Märkten mit Brutto-Konvention
-  (AL, BG) → `fehlend` + Note.
+  «Fläche» ohne Zusatz gilt als Wohnfläche, auch fremdsprachig («Area», «Floor area»,
+  «Površina», «Kvadratura»), ausser in Märkten mit Brutto-Konvention (AL, BG) → `fehlend`
+  + Note. Die Brutto-Liste ist bewusst kurz: MK, RS, BA und HR gehören nicht dazu
+  (Owner-Entscheid 13.10.2026).
 - **Datenfeld vs. Text:** Weichen zwei Flächenangaben um höchstens 5 % voneinander ab
   (Rundung, «ungefähr»), ist das kein Widerspruch: Wert aus dem strukturierten Datenfeld
-  `belegt`, der andere in die Note. Über 5 % → Klasse 10.
+  `belegt`, der andere in die Note. Das gilt auch, wenn das Datenfeld erkennbar eine
+  Rundung des Textwerts ist (Feld «64 m²», Text «63,7 m²» → 64): die Regel bleibt
+  deterministisch, der genauere Wert steht in der Note. Über 5 % → Klasse 10.
+- **Mehrere Datenfelder:** Zeigt die Seite eine Fläche in der Kopfzeile ohne Label und
+  eine im beschrifteten Merkmalsfeld («Wohnfläche …»), gilt das beschriftete Feld.
 - **Im Eval sichtbar als:** `wert_abweichung` (+10 bis +25 %), `konflikt_uebergangen`.
 
 ### 6. Fremdsprache (AL)
@@ -144,6 +161,7 @@ Unterschiede im Leerraum (Zeilenumbrüche, geschützte Leerzeichen) sowie Unicod
 | 14 | Fremdwährung | BA «142.000 KM», MK «денари»/MKD, Plattform zeigt zusätzlich eine EUR-Umrechnung | Preis in der Währung, in der er inseriert ist, `core.currency` entsprechend (`BAM`, `MKD`). Umrechnungen der Plattform oder eigene nie als `belegt`, höchstens in die Note | `waehrung_abweichung` |
 | 15 | Kyrillische Schrift | BG, MK, teils RS (ćirilica) | Zitat in Originalschrift, keine Transliteration; Notes auf Deutsch. BG: «застроена площ» ist brutto (inkl. Anteil Gemeinschaftsflächen), «чиста площ» netto → Klasse 5 | `zitat_nicht_gefunden`, `wert_abweichung` |
 | 16 | Anbieteraussage als Prüfbefund | «uknjižen» (RS/BA), «Eigentumszertifikat vorhanden» (AL), «Akt 16» (BG), «grundbuchlich eingetragen» | Fakt fürs Objektprofil höchstens als `note`; zugehörige Red Flag bleibt `offen`, bis ein Dokument vorliegt | (nicht im Eval; Red-Flag-Review) |
+| 17 | Portal-Rechner | Kreditrate («Monthly payment … /mo», «Monatliche Rate»), «Preis/m² berechnet von …», Kaufnebenkosten- und Renditerechner des Portals | Errechnete Werte sind keine Angaben zum Objekt: nie als Miete, Kosten oder Kernwert übernehmen, nie als Zitat für einen Kernwert verwenden | `konflikt_uebergangen` |
 
 ## Abdeckung
 

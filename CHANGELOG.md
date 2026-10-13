@@ -32,6 +32,15 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
   unqualified «Fläche» counts as living area except in AL/BG; rent of a co-sold parking space
   counts; «Miete» without cold/warm is `belegt` with a note; the stricter rule wins.
 - CI checks that every committed gold file is schema-valid and its quotes occur in its source.
+- Original listing texts fetched on 13.10.2026 (one request per URL, no bot-protection bypass):
+  12 of 20 usable; immowelt and ImmoScout24.de (all six DE listings) answer with bot protection,
+  two listings have expired. `MANIFEST.md` records status, portal language and redactions per listing.
+- New rules from the owner's edge-case decisions on original texts: a data field within 5 % of the
+  text wins even when it is visibly rounded; unqualified area labels in other languages («Area»,
+  «Floor area», «Površina») count as living area outside AL/BG; quotes follow the fetched portal
+  language version including its labels and number format; a separately stated commission goes
+  into the note; AT owner costs («Monatliche Kosten», «Betriebskosten») and portal calculators
+  (loan rate, computed price per m², class 17) are never rent.
 
 ## 0.1.0 – 2026-10-10
 

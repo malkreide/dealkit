@@ -30,7 +30,9 @@ Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
   Red-Flag-Liste (`offen`) und alle Felder auf `fehlend`. Felder füllen, keines löschen.
 - Jeder Wert ist ein Evidenz-Objekt `{value, status, source}`.
 - `belegt` **nur** mit wörtlichem `quote` aus der Quelle: ein zusammenhängender Ausschnitt,
-  in Originalsprache (AL: Albanisch), Zahlen unverändert, ohne «…».
+  in Originalsprache (AL: Albanisch), Zahlen unverändert, ohne «…». Quelle ist die abgerufene
+  Sprachfassung: Labels und Zahlenformat einer fremdsprachigen Portaloberfläche wörtlich
+  zitieren («Living area 58 m²», «1,250,000 KM»), nicht zurückübersetzen oder umformatieren.
 - **Falsche Grösse → `fehlend` + Note; richtige Grösse als Prognose → `geschaetzt`.**
   Preisbereiche, Projektseiten, mehrere oder widersprüchliche Werte → `fehlend`.
 - Miete: nur Nettokaltmiete als `monthly_rent`. Warmmiete, Bruttomiete oder Jahresmiete →
@@ -39,9 +41,14 @@ Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
   nur `belegt`, wenn sie im Text steht). «Erzielbare» oder «mögliche» Miete → `geschaetzt`
   mit Note; jährliche Zielmiete → `fehlend` (strengere Regel gilt). Bei Kurzzeitvermietung (AL/ME) den Block
   `operating.short_term_rental` füllen und `monthly_rent` auf `fehlend` lassen – das Profil leitet ab.
+  Nie Miete: Eigentümerkosten (Hausgeld, AT «Monatliche Kosten»/«Betriebskosten») und Werte aus
+  Portal-Rechnern (Kreditrate, «Monthly payment», berechneter Preis/m²).
 - Fläche: nur Wohnfläche netto; nur Brutto-/Nutzfläche → `fehlend` + Note. «Fläche» ohne Zusatz
-  gilt als Wohnfläche, ausser AL/BG → `fehlend`. Datenfeld vs. Text ≤ 5 % → Datenfeld `belegt`.
-  Preis: Preisfeld und Text verschieden → `fehlend` + Note.
+  gilt als Wohnfläche, auch fremdsprachig («Area», «Floor area», «Površina»), ausser AL/BG →
+  `fehlend`. Datenfeld vs. Text ≤ 5 % → Datenfeld `belegt`, auch wenn es gerundet ist; der
+  genauere Wert in die Note. Kopfzeile ohne Label vs. beschriftetes Feld → beschriftetes Feld.
+  Preis: Preisfeld und Text verschieden → `fehlend` + Note. Separat ausgewiesene Provision →
+  Preis `belegt`, Provision in die Note.
 - Notes auf Deutsch; keine Namen, Telefonnummern oder E-Mails privater Verkäufer übernehmen.
 - Quellenstufe ehrlich setzen: Portal/Makler-Angaben sind `portal`/`makler`, nie `amtlich`.
 - `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste).
