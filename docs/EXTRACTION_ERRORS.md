@@ -224,7 +224,8 @@ in kyrillischer Schrift und mit Emojis); keine Warnung `wert_nicht_im_zitat`.
 Ausserhalb der Kernwerte wich `object.type` bei `rs-petrovaradin-15` ab (Gold
 `neubau_projekt` aus dem Regeltest übernommen, Kandidat `wohnung` mit Verweis auf Klasse 4:
 eine Einheit, keine Projektseite). Das Eval vergleicht das Feld nicht. Der Owner hat dem
-Kandidaten recht gegeben: Gold auf `wohnung` gesetzt, Abgrenzung in Klasse 4 ergänzt.
+Kandidaten recht gegeben: Gold auf `wohnung` gesetzt (auch im Regeltest-Gold unter
+`fixtures/summaries/`), Abgrenzung in Klasse 4 ergänzt.
 
 **Gegenprobe.** In einer Kopie wurden drei Fehler eingebaut und vollständig erkannt (Exit 1,
 Quote 9/12): umgerechnete Jahresmiete als `belegt` (dafür erhielt die Kopie eines `.txt` eine
