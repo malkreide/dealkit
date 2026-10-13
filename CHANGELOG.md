@@ -41,6 +41,12 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
   language version including its labels and number format; a separately stated commission goes
   into the note; AT owner costs («Monatliche Kosten», «Betriebskosten») and portal calculators
   (loan rate, computed price per m², class 17) are never rent.
+- Gold for the 12 usable original listings (`fixtures/listings/*.gold.json`). Blind candidate
+  from a separate agent (rules, schemas and texts only): 12/12 correct, core values 36/36, hard
+  gate OK, no warnings; a counter-check with three planted errors (converted annual rent, invented
+  quote, wrong currency) is fully detected. Formally the stage-1 gate is met, but it is **not
+  robust**: 12 instead of ≥ 18 fixtures, no DE, no CH and no listing with a rent; three rules were
+  sharpened on the same set. Result and limits in `docs/EXTRACTION_ERRORS.md` («Ergebnisse»).
 
 ## 0.1.0 – 2026-10-10
 

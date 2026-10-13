@@ -1,0 +1,46 @@
+{
+  "id": "al-tirana-myslymshyri-17",
+  "market": "AL",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "desrealestate.al",
+    "url": "https://desrealestate.al/sq/property/shitet-apartament-21-ne-myslym-shyr-tirane/",
+    "documents": [
+      "al-tirana-myslymshyri-17.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 85000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "85,000 EUR / Total",
+        "note": "Text nennt denselben Preis («85000 euro total»); Çmimi Negociueshëm: Po (verhandelbar)"
+      }
+    },
+    "living_area_m2": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "quote": "Sipërfaqe 72M2",
+        "note": "AL: «Sipërfaqe» ohne neto/bruto, 72 m² (auch im Text «sipërfaqe prej 72m2»)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

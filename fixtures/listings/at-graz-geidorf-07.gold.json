@@ -1,0 +1,44 @@
+{
+  "id": "at-graz-geidorf-07",
+  "market": "AT",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "willhaben.at",
+    "url": "https://www.willhaben.at/iad/immobilien/d/eigentumswohnung/steiermark/graz/ideal-fuer-eigennutzer-anleger-attraktive-2-zimmer-wohnung-mit-balkon-in-geidorf-1286254601/",
+    "documents": [
+      "at-graz-geidorf-07.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 149000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis € 149.000"
+      }
+    },
+    "living_area_m2": {
+      "value": 48,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche 48 m²"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat; «Monatliche Kosten (inkl. MWSt) € 216,10» sind Eigentümerkosten (Betriebskosten, Rücklage), keine Miete"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

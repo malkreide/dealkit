@@ -1,0 +1,46 @@
+{
+  "id": "bg-plovdiv-izgrev-18",
+  "market": "BG",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "imot.bg",
+    "url": "https://imotekapl.imot.bg/obiava-1b178547551467263-prodava-dvustaen-apartament-grad-plovdiv-izgrev",
+    "documents": [
+      "bg-plovdiv-izgrev-18.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 91900,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "91 900 €",
+        "note": "«Не се начислява ДДС» (keine MWSt)"
+      }
+    },
+    "living_area_m2": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "quote": "обща площ от 55.61 кв.м",
+        "note": "BG: Datenfeld «Площ: 56 m2» ohne чиста/застроена; Text «обща площ от 55.61 кв.м» (Gesamtfläche); Brutto-Konvention"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "mk-skopje-aerodrom-13",
+  "market": "MK",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "level.mk",
+    "url": "https://level.mk/en/property/studio-sale-skopje-28m2-2/",
+    "documents": [
+      "mk-skopje-aerodrom-13.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 80000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Price: €80.000",
+        "note": "Englische Portalfassung (Link im Manifest); möbliert"
+      }
+    },
+    "living_area_m2": {
+      "value": 28,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Area: 28 m²",
+        "note": "«Area» ohne Zusatz; MK nicht in der Brutto-Liste (AL, BG)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}
