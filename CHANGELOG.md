@@ -47,6 +47,8 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
   quote, wrong currency) is fully detected. Formally the stage-1 gate is met, but it is **not
   robust**: 12 instead of ≥ 18 fixtures, no DE, no CH and no listing with a rent; three rules were
   sharpened on the same set. Result and limits in `docs/EXTRACTION_ERRORS.md` («Ergebnisse»).
+- Owner decision: a single unit under construction is `wohnung`, not `neubau_projekt` (class 4,
+  skill); gold of `rs-petrovaradin-15` updated accordingly. Core values unchanged.
 
 ## 0.1.0 – 2026-10-10
 

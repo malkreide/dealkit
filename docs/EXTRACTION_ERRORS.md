@@ -105,6 +105,9 @@ im Sinne von Klasse 5. Die Sprachfassung wird im Manifest vermerkt.
   `object.type` = `neubau_projekt`. Nur wenn die Eingabe eine konkrete Einheit bezeichnet
   (z. B. «WE 12») und deren Zeile im Text steht, werden deren Werte `belegt` – Zitat ist
   dann die Tabellenzeile, wie sie im Quelltext steht.
+- **Abgrenzung:** Eine einzelne Einheit im Bau (eigener Inseratcode, eigener Preis, eigene
+  Fläche) ist keine Projektseite: `object.type` = `wohnung`, Werte nach den üblichen Regeln,
+  Bauzustand und fehlender Grundbucheintrag in die Note (Owner-Entscheid 13.10.2026).
 - **Im Eval sichtbar als:** `konflikt_uebergangen` (irgendeine Einheit übernommen),
   oft zusammen mit `zitat_nicht_gefunden`, weil Tabellenzeilen im PDF-Text anders
   umbrochen sind als im Layout.
@@ -218,9 +221,10 @@ danach wurden Gold und Kandidat zusammengeführt:
 
 Hartes Gate: 20 `belegt`-Werte, alle Zitate wörtlich gefunden (auch über Zeilenumbrüche,
 in kyrillischer Schrift und mit Emojis); keine Warnung `wert_nicht_im_zitat`.
-Ausserhalb der Kernwerte weicht `object.type` bei `rs-petrovaradin-15` ab (Gold
+Ausserhalb der Kernwerte wich `object.type` bei `rs-petrovaradin-15` ab (Gold
 `neubau_projekt` aus dem Regeltest übernommen, Kandidat `wohnung` mit Verweis auf Klasse 4:
-eine Einheit, keine Projektseite). Das Eval vergleicht das Feld nicht; offen für den Owner.
+eine Einheit, keine Projektseite). Das Eval vergleicht das Feld nicht. Der Owner hat dem
+Kandidaten recht gegeben: Gold auf `wohnung` gesetzt, Abgrenzung in Klasse 4 ergänzt.
 
 **Gegenprobe.** In einer Kopie wurden drei Fehler eingebaut und vollständig erkannt (Exit 1,
 Quote 9/12): umgerechnete Jahresmiete als `belegt` (dafür erhielt die Kopie eines `.txt` eine

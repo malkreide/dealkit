@@ -51,7 +51,8 @@ Schema: `schemas/listing.schema.json`. Konfliktregeln und Grenzfälle:
   Preis `belegt`, Provision in die Note.
 - Notes auf Deutsch; keine Namen, Telefonnummern oder E-Mails privater Verkäufer übernehmen.
 - Quellenstufe ehrlich setzen: Portal/Makler-Angaben sind `portal`/`makler`, nie `amtlich`.
-- `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste).
+- `market` aus Land/Ort ableiten; `object.type` setzen (steuert die Checkliste). `neubau_projekt`
+  nur für Projektseiten mit mehreren Einheiten; eine einzelne Einheit im Bau ist `wohnung`.
   AT, MK, BA, BG und HR sind reine Extraktionsmärkte: nach `dealkit validate` enden, kein Screening.
 - Preis in der inserierten Währung (`core.currency`: EUR, CHF, BAM, MKD …); Umrechnungen nur in die Note.
 - Red Flags stehen im Gerüst (sonst `dealkit checklist <MARKT> --type <TYP>`). Nur Punkte auf
