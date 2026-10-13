@@ -48,7 +48,8 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
   robust**: 12 instead of ≥ 18 fixtures, no DE, no CH and no listing with a rent; three rules were
   sharpened on the same set. Result and limits in `docs/EXTRACTION_ERRORS.md` («Ergebnisse»).
 - Owner decision: a single unit under construction is `wohnung`, not `neubau_projekt` (class 4,
-  skill); gold of `rs-petrovaradin-15` updated accordingly. Core values unchanged.
+  skill); gold of `rs-petrovaradin-15` updated accordingly, in `fixtures/listings/` and in the
+  rule-test gold under `fixtures/summaries/`. Core values unchanged.
 
 ## 0.1.0 – 2026-10-10
 
