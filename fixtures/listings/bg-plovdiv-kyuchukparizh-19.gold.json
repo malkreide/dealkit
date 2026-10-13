@@ -1,0 +1,46 @@
+{
+  "id": "bg-plovdiv-kyuchukparizh-19",
+  "market": "BG",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "imot.bg",
+    "url": "https://prima_casa.imot.bg/obiava-1b178704529860087-prodava-dvustaen-apartament-grad-plovdiv-kyuchuk-parizh",
+    "documents": [
+      "bg-plovdiv-kyuchukparizh-19.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "quote": "💶 102 900",
+        "note": "Preisfeld «99 000 €» und Beschreibung «💶 102 900» widersprechen sich (3,9 %); Preisgeschichte vorhanden, Senkung nicht ausdrücklich – beim Anbieter bestätigen"
+      }
+    },
+    "living_area_m2": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "quote": "Площ: 73 кв.м",
+        "note": "BG: «Площ» ohne чиста/застроена, 73 m²; Brutto-Konvention"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

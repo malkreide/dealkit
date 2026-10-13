@@ -1,0 +1,45 @@
+{
+  "id": "at-linz-franckviertel-10",
+  "market": "AT",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "immobilienscout24.at",
+    "url": "https://www.immobilienscout24.at/expose/6a226bb44833c10484f804f7",
+    "documents": [
+      "at-linz-franckviertel-10.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 139000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Kaufpreis 139.000 €"
+      }
+    },
+    "living_area_m2": {
+      "value": 49.6,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Wohnfläche 49,6 m²",
+        "note": "Kopfzeile «50 m²» (gerundet, Abweichung 0,8 %)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat; «Betriebskosten 179,49 €» sind Eigentümerkosten, keine Miete"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "hr-osijek-jug-20",
+  "market": "HR",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "nekretnine.hr",
+    "url": "https://www.nekretnine.hr/oglasi/4044593/",
+    "documents": [
+      "hr-osijek-jug-20.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 95000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Cijena € 95.000"
+      }
+    },
+    "living_area_m2": {
+      "value": 31,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Površina 31 m²",
+        "note": "Text: «stan površine 31,48 m²» (Datenfeld gerundet, 1,5 %); «Površina» ohne Zusatz, HR nicht in der Brutto-Liste"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}

@@ -9,8 +9,9 @@ erscheint als Fehler, auch wenn beide «vernünftig» sind.
 > Owner entschieden (Regeltest auf `fixtures/summaries/`, 12.10.); gerundetes Datenfeld,
 > Flächenbezeichnung ohne Zusatz ausserhalb AL/BG und Sprachfassung des Portals am
 > 13.10. auf Originaltexten (`fixtures/listings/`, 12 von 20 Inseraten abrufbar).
-> Die Klassen 1–3, 8 und 9 sind weiterhin nur *erwartet*: Keines der 12 Originalinserate
-> nennt eine Miete (siehe «Abdeckung» und «Ergebnisse»).
+> Weiterhin nur *erwartet* sind Preisbereiche (Klasse 1), Projektseiten (4) und alle
+> Mietfälle (2, 3, 8, 9): Keines der 12 Originalinserate nennt eine Miete (siehe «Abdeckung»
+> und «Ergebnisse»).
 > Regeln, die nicht tragen, hier ändern – nicht stillschweigend im Gold.
 
 ## Grundregel
@@ -165,21 +166,88 @@ im Sinne von Klasse 5. Die Sprachfassung wird im Manifest vermerkt.
 
 ## Abdeckung
 
-Ein Eval ist nur so gut wie seine Fixtures. Zwei Lücken der aktuellen Auswahl (Manifest):
+Ein Eval ist nur so gut wie seine Fixtures. Lücken der aktuellen Auswahl (Manifest, Stand 13.10.2026):
 
-- **Miete ist kaum vertreten.** Nur 2–3 der 20 Inserate nennen überhaupt eine Miete. Steht
-  sie in Gold und Kandidat auf `fehlend`, zählt das als korrekt – die 90-%-Hürde wird so
-  leicht erreichbar, während die fehleranfälligste Extraktion (Klassen 2, 3, 8) kaum geprüft
-  wird. Für das Gate zusätzlich die Quote **nur über Fixtures mit Mietangabe** ausweisen
-  oder vermietete Kapitalanlagen nachliefern.
+- **Miete fehlt ganz.** Die drei DE-Inserate mit Mietangabe (Nr. 3–5) sind vom Portal
+  blockiert; keines der 12 auswertbaren Inserate nennt eine Miete. `monthly_rent` steht in
+  Gold und Kandidat überall auf `fehlend` und zählt als korrekt – geprüft ist damit nur, dass
+  keine Miete erfunden wird (Eigentümerkosten und Portal-Rechner wurden nicht übernommen),
+  nicht die fehleranfälligste Extraktion (Klassen 2, 3, 8, 9). Quote **nur über Fixtures mit
+  Mietangabe**: 0 von 0 – nicht messbar.
+- **Kein DE-Inserat.** Der Referenzmarkt mit vollem Profil ist mit 0 von 6 vertreten
+  (immowelt und ImmoScout24.de antworten mit Bot-Schutz). Deutsche Begriffe wurden nur an
+  drei AT-Inseraten geprüft.
 - **Kein CH-Inserat.** Schweizer Zahlenformate («1'250'000.–»), Nettowohnfläche und
   Mietzins-Begriffe (Klassen 2, 5, 7) sind ungetestet.
+- **Zugeschnittene Quelltexte.** Die `.txt` enthalten Titel, Preisblock, Datenfelder und
+  Beschreibung; Navigation, Werbung, Rechner und ähnliche Objekte sind entfernt. Im Betrieb
+  sieht der Skill die ganze Seite (oder was der User einfügt) – mehr Ablenkung als im Eval.
 
 ## Ergebnisse
 
 | Datum | Fixtures | Ergebnis | Einordnung |
 |---|---|---|---|
 | 12.10.2026 | `fixtures/summaries/` (20, Zusammenfassungen) | 20/20 korrekt, Gate OK, keine Warnung | Regeltest, **nicht** das Stufe-1-Gate (siehe unten) |
+| 13.10.2026 | `fixtures/listings/` (12 von 20, Originaltexte) | 12/12 korrekt, Kernwerte 36/36, Gate OK, keine Warnung; Gegenprobe 3/3 erkannt | Gate **formal erreicht, nicht belastbar** (siehe unten) |
+
+### 13.10.2026 – Originaltexte
+
+**Ablauf.** Abruf je URL einmal (Manifest), Quelltext wörtlich zugeschnitten, Gold-Entwurf
+nach diesem Dokument, Grenzfälle vom Owner entschieden (gerundetes Datenfeld, Flächenlabel
+ohne Zusatz ausserhalb AL/BG, Sprachfassung des Portals). Der Kandidat stammt von einem
+separaten Agenten, der nur `SKILL.md`, dieses Dokument, `schemas/` und Kopien der `.txt`
+sah (kein Zugriff auf `fixtures/` oder Gold; Liste der gelesenen Dateien geprüft). Erst
+danach wurden Gold und Kandidat zusammengeführt:
+`python scripts/eval_extraction.py --min-rate 0.9` → Exit 0.
+
+**Abweichungen je Fehlklasse** (Vorkommen im Quelltext · Fehler im Kandidaten):
+
+| Klasse | Vorkommen in den 12 Inseraten | Fehler |
+|---|---|---|
+| 1 Preis + separat ausgewiesene Provision | 2 (RS «+ 3% posrednička naknada») | 0 |
+| 2 Eigentümerkosten ≠ Miete | 2 (AT «Monatliche Kosten», «Betriebskosten») | 0 |
+| 5/6/15 Fläche ohne neto/bruto in AL/BG | 3 (AL «Sipërfaqe», BG «Площ», «обща площ») | 0 |
+| 5 Datenfeld vs. Text ≤ 5 % | 3 (gerundetes Feld; Kopfzeile vs. «Wohnfläche») | 0 |
+| 7 Zahlenformate | alle («91 900 €», «85,000 EUR», «€80.000», «142,000 KM», «49,6 m²») | 0 |
+| 10 Preisfeld vs. Text | 1 (BG: Feld 99 000 €, Text 102 900) | 0 |
+| 14 Fremdwährung | 1 (BA, KM → `BAM`) | 0 |
+| 15 Kyrillisch | 2 (BG, Windows-1251) | 0 |
+| 16 Anbieteraussage als Prüfbefund | 4 (Grundbuch, Eigentumszertifikat, Akt 16) | 0 (Red Flags `offen`) |
+| 17 Portal-Rechner | 9 (berechneter Preis/m², z. B. «Berechnet von willhaben», «KM/m²») | 0 |
+| 2, 3, 8, 9 Miete | **0** | – |
+
+Hartes Gate: 20 `belegt`-Werte, alle Zitate wörtlich gefunden (auch über Zeilenumbrüche,
+in kyrillischer Schrift und mit Emojis); keine Warnung `wert_nicht_im_zitat`.
+Ausserhalb der Kernwerte weicht `object.type` bei `rs-petrovaradin-15` ab (Gold
+`neubau_projekt` aus dem Regeltest übernommen, Kandidat `wohnung` mit Verweis auf Klasse 4:
+eine Einheit, keine Projektseite). Das Eval vergleicht das Feld nicht; offen für den Owner.
+
+**Gegenprobe.** In einer Kopie wurden drei Fehler eingebaut und vollständig erkannt (Exit 1,
+Quote 9/12): umgerechnete Jahresmiete als `belegt` (dafür erhielt die Kopie eines `.txt` eine
+synthetische Zeile «Jahresnettokaltmiete: 6.480 €») → `konflikt_uebergangen` +
+`wert_nicht_im_zitat`; erfundenes Zitat → `zitat_nicht_gefunden` (Gate); KM in EUR
+umgerechnet → `waehrung_abweichung` + `wert_abweichung` + `wert_nicht_im_zitat`.
+
+**Wie belastbar sind die 12/12?** Das Gate ist formal erreicht (≥ 90 %, kein `belegt`
+ohne Zitat), trägt die Freigabe von Stufe 1 aber **nicht**:
+
+- **12 statt mindestens 18 auswertbare Fixtures.** Ein Fehler mehr oder weniger verschiebt
+  die Quote um 8 Prozentpunkte.
+- **Keine Miete, kein DE, kein CH** (siehe «Abdeckung»). Die riskantesten Klassen sind
+  ungeprüft; 12 der 36 korrekten Kernwerte sind «keine Miete genannt → `fehlend`».
+- **Regeln am Prüfset geschärft.** Drei Regeln (gerundetes Datenfeld, fremdsprachige
+  Flächenlabels, Portalsprache) entstanden am selben Tag an genau diesen Inseraten. Der Lauf
+  zeigt, dass sie eindeutig formuliert sind, nicht, dass sie auf neue Inserate tragen.
+- **Eine Modellfamilie.** Zuschnitt der Quelltexte, Gold-Entwurf, Regeltexte und Kandidat
+  stammen aus derselben Modellfamilie; der Owner hat drei Grenzfälle entschieden und den
+  Vorschlag bestätigt, nicht jedes Feld unabhängig erfasst. Ein Lauf, keine Wiederholung.
+
+**Nächster Schritt für ein belastbares Gate:** die sechs DE-Inserate (oder Ersatz) per
+Browser kopieren, vermietete Kapitalanlagen mit Miete und 3 CH-Inserate ergänzen (Ziel
+≥ 18, davon ≥ 5 mit Miete), Regeln vor dem Lauf einfrieren und den blinden Lauf auf dem
+erweiterten Set wiederholen.
+
+### 12.10.2026 – Regeltest auf Zusammenfassungen
 
 **Wie belastbar sind die 20/20?** Der Kandidat wurde von einem separaten Agenten ohne
 Zugriff auf das Gold erzeugt, nur aus Quelltext, Skill und diesem Dokument. Ein
@@ -194,7 +262,10 @@ Trotzdem sagt das Ergebnis wenig über echte Inserate:
 - Gold-Entwurf, Regeltexte und Kandidat stammen aus derselben Modellfamilie; nur die vier
   Grenzfälle hat ein Mensch entschieden.
 
-Aussagekräftig wird erst der Lauf auf Originaltexten in `fixtures/listings/`.
+Der Vergleich mit den Originalen (13.10.) bestätigt die Grenze: In zwei der zwölf
+vergleichbaren Fälle wich das Gold der Zusammenfassung vom Original ab – Nr. 17 übersetzte
+«Sipërfaqe» als «Wohnfläche» (Original: AL ohne neto/bruto → `fehlend`), Nr. 20 kannte nur
+den Textwert 31,48 m², nicht das Datenfeld.
 
 ## Eval-Klassen (Referenz)
 

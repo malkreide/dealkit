@@ -26,6 +26,9 @@ Telefonnummern auch dann, wenn sie einer Agentur gehören könnten (oft Mobilnum
 Makler). Privatinserate waren keine dabei (Nr. 11 ist abgelaufen). Kein Text stammt
 ausschliesslich aus eingebettetem JSON.
 
+Gold: `<Datei>.gold.json` für alle 12 auswertbaren Inserate (Grenzfälle vom Owner
+entschieden, 13.10.); Eval-Ergebnis in `docs/EXTRACTION_ERRORS.md`, Abschnitt «Ergebnisse».
+
 Ergebnis: **12 von 20 auswertbar.** 6 sind vom Portal blockiert (immowelt, ImmoScout24.de –
 also alle DE-Inserate), 2 abgelaufen. Die rohen HTML-Dateien und die `.txt` liegen nur im
 Container der Session; für spätere Läufe als Archiv aufbewahren.

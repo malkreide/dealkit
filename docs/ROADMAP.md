@@ -36,6 +36,11 @@ Ziel: Aus URL/PDF/Text entsteht ein valides `listing.json`, ohne dass Werte erfu
 **Gate:** Kernwerte (Preis, Fläche, Miete) in ≥ 90 % der Fixtures korrekt **und** kein
 einziger erfundener `belegt`-Wert (Zitat muss im Quelltext vorkommen).
 
+**Stand 13.10.2026:** formal erreicht (12/12 korrekt, kein `belegt` ohne Zitat), aber
+**nicht belastbar** – nur 12 von 20 Inseraten abrufbar, davon kein DE, kein CH und keines mit
+Miete. Stufe 1 bleibt offen, bis ≥ 18 Fixtures (≥ 5 mit Miete) mit eingefrorenen Regeln
+blind bestanden sind (siehe `docs/EXTRACTION_ERRORS.md`, «Ergebnisse»).
+
 **Prompt für Claude Code:**
 > Lies README.md, skills/deal-screen/SKILL.md und schemas/. Baue `scripts/eval_extraction.py`,
 > das für jede Datei in `fixtures/listings/*.txt` das zugehörige `*.gold.json` mit einem von dir

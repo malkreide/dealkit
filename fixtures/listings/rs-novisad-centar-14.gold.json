@@ -1,0 +1,46 @@
+{
+  "id": "rs-novisad-centar-14",
+  "market": "RS",
+  "captured_at": "2026-10-13T13:10:00Z",
+  "source": {
+    "kind": "portal",
+    "portal": "solis-nekretnine.com",
+    "url": "https://mail.solis-nekretnine.com/stan-novi-sad-centar-one-room-apartment/en/1055933/",
+    "documents": [
+      "rs-novisad-centar-14.txt"
+    ]
+  },
+  "core": {
+    "purchase_price": {
+      "value": 85000,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Price 85.000 € + 3% posrednička naknada",
+        "note": "zzgl. 3 % Vermittlungsgebühr (posrednička naknada)"
+      }
+    },
+    "living_area_m2": {
+      "value": 40,
+      "status": "belegt",
+      "source": {
+        "kind": "portal",
+        "quote": "Floor area 40 m2",
+        "note": "«Floor area» ohne Zusatz; RS nicht in der Brutto-Liste (AL, BG)"
+      }
+    },
+    "monthly_rent": {
+      "value": null,
+      "status": "fehlend",
+      "source": {
+        "kind": "portal",
+        "note": "Keine Mietangabe im Inserat"
+      }
+    },
+    "currency": "EUR"
+  },
+  "object": {
+    "type": "wohnung"
+  },
+  "notes": "GOLD (Originaltext, Abruf 13.10.2026); Grenzfälle vom Owner entschieden."
+}
