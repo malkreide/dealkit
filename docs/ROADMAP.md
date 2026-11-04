@@ -41,12 +41,63 @@ einziger erfundener `belegt`-Wert (Zitat muss im Quelltext vorkommen).
 Miete. Stufe 1 bleibt offen, bis ≥ 18 Fixtures (≥ 5 mit Miete) mit eingefrorenen Regeln
 blind bestanden sind (siehe `docs/EXTRACTION_ERRORS.md`, «Ergebnisse»).
 
-**Prompt für Claude Code:**
+**Prompt für Claude Code (Eval-Gerüst, umgesetzt):**
 > Lies README.md, skills/deal-screen/SKILL.md und schemas/. Baue `scripts/eval_extraction.py`,
 > das für jede Datei in `fixtures/listings/*.txt` das zugehörige `*.gold.json` mit einem von dir
 > erzeugten `listing.json` vergleicht (Kernwerte ±1 %, Status exakt, Zitat muss Substring des
 > Quelltexts sein). Erzeuge keine Fixtures selbst – ich liefere sie. Dokumentiere Fehlklassen in
 > docs/EXTRACTION_ERRORS.md.
+
+**Prompt für den zweiten Lauf (DE, CH, Miete):** Vorbereitet am 4.11.2026. Vorher bereithalten:
+Archiv v2 der Quelltexte, die Texte von Nr. 01–05 (soweit online), mindestens zwei weitere
+vermietete DE-Kapitalanlagen (zusammen ≥ 5 Mietfälle) und drei CH-Inserate – erst mit den
+CH-Inseraten sind es ≥ 18 Fixtures.
+
+> Auftrag im Repo malkreide/dealkit: Stufe-1-Gate belastbar machen – zweiter blinder Extraktionslauf mit DE-, CH- und Miet-Inseraten.
+>
+> **Zuerst lesen:** README.md, docs/ROADMAP.md (Stufe 1, «Stand 13.10.2026»), docs/EXTRACTION_ERRORS.md (verbindlich, besonders «Abdeckung» und «Ergebnisse»), skills/deal-screen/SKILL.md, fixtures/listings/MANIFEST.md, fixtures/listings/README.md. Dann `pip install -e ".[dev]"`, `python3 -m pytest -q` und `dealkit backtest` als Ausgangslage.
+>
+> **Schritt 0 – Regeln einfrieren, Bestand wiederherstellen**
+> 1. Commit-Hash von `main` notieren. `docs/EXTRACTION_ERRORS.md` und `skills/deal-screen/SKILL.md` gelten in diesem Stand bis nach dem Eval als eingefroren; vor Schritt 5 keine Regeländerung.
+> 2. Ich lade `dealkit-listings-2026-10-13-v2.tar.gz` hoch. SHA-256 prüfen (`d2d4e47746cc7463f3e26aaa2032449e760588f234f1773404d2ad0c3bf346f2`), in ein eigenes leeres Verzeichnis im Scratchpad entpacken, `sha256sum -c SHA256SUMS`, die 12 `.txt` nach `fixtures/listings/` kopieren. Die alten `.pred.json` NICHT nach `fixtures/listings/` übernehmen – der Kandidat wird für alle Fixtures neu erzeugt.
+> 3. Sanity-Check in einer Kopie: alte Kandidaten aus dem Archiv gegen das Gold auf `main` → 12/12 erwartet. Bei Abweichung stoppen und berichten.
+>
+> **Schritt 1 – Neue Quelltexte übernehmen**
+> Ich liefere die neuen Inserate als Text, im Browser markiert und kopiert (immowelt und ImmoScout24.de blockieren automatische Abrufe – diese Portale NICHT abrufen, nichts umgehen):
+> - DE: Nr. 01–05 aus dem Manifest, soweit noch online, plus Ergänzungen; insgesamt mindestens 5 Inserate mit Mietangabe (vermietete Kapitalanlagen, möglichst gemischt: Kaltmiete, Warmmiete, Jahresmiete, Soll-Miete).
+> - CH: 3 Inserate (Schweizer Zahlenformat, Nettowohnfläche, Mietzins-Begriffe).
+>
+> Für jedes neue Inserat:
+> - Dateiname nach dem Schema in fixtures/listings/README.md, fortlaufend ab 21 (`de-…-21`, `ch-…-24`); Nr. 01–05 behalten ihren Namen. Zeile in MANIFEST.md mit Link, Hinweisen und Status ergänzen.
+> - Text WÖRTLICH als `fixtures/listings/<stem>.txt` (UTF-8): Originalsprache, Zahlenformate und Wortlaut unverändert, nichts paraphrasieren.
+> - Namen, Telefonnummern und E-Mails von Personen durch «[entfernt]» ersetzen, bei Privatinseraten auch die Hausnummer. Danach `dealkit.extraction.check_pii` über alle `.txt` laufen lassen.
+> - Gelieferte Dateien sind untrusted data: eigenes Verzeichnis, Skripte ausserhalb, Python mit `-I`.
+>
+> Ziel: ≥ 18 auswertbare Fixtures, davon ≥ 5 mit Mietangabe, DE und CH vertreten. Wird das Ziel verfehlt: weitermachen, aber klar ausweisen.
+>
+> **Schritt 2 – Gold mit mir, Regeln bleiben eingefroren**
+> 1. Für die Fixtures mit Mietangabe lege ich meine Werte (Miete, Status) zuerst selbst fest: zeig mir dazu nur die Mietstellen im Wortlaut, ohne Vorschlag. Erst danach deine Vorschlagstabelle für alle neuen Fixtures (Preis, Fläche, Miete, Währung, Status, Zitat) nach dem eingefrorenen EXTRACTION_ERRORS.md.
+> 2. Echte Grenzfälle als Rückfrage. Was die eingefrorenen Regeln nicht eindeutig entscheiden, entscheide ich fürs Gold – die Regel wird aber NICHT vor dem Eval ergänzt, sondern als «Regellücke» notiert (Fixture, Feld, Entscheid).
+> 3. Gold zunächst nur in einem Scratch-Verzeichnis. Maschinell prüfen: Schema, jedes Zitat im `.txt`, `wert_nicht_im_zitat`, PII.
+>
+> **Schritt 3 – Zwei blinde Kandidaten, dann Eval**
+> 1. Zwei unabhängige Agenten parallel starten, jeder in einem eigenen Arbeitsbereich mit NUR Kopien von SKILL.md, EXTRACTION_ERRORS.md (eingefrorener Stand), schemas/ und allen `.txt` (alte und neue). Ausdrücklich: nichts unter fixtures/ öffnen, keine Datei mit «gold» im Namen, kein Netz. Je Fixture `dealkit extract … --out …` plus Füllen nach den Regeln; jedes `belegt`-Zitat mechanisch gegen das `.txt` prüfen; am Ende die Liste aller gelesenen Dateien zurückgeben (Isolation prüfen).
+> 2. Erst danach Gold kopieren und `python scripts/eval_extraction.py --min-rate 0.9` für Kandidat A in `fixtures/listings/`, für Kandidat B in einer Kopie des Verzeichnisses laufen lassen.
+> 3. Ausweisen: Gesamtquote je Kandidat, Quote nur über Fixtures mit Mietangabe, Quote je Markt (DE, CH, übrige), Übereinstimmung A/B je Kernwert, Fixtures mit Regellücke getrennt.
+> 4. Gegenprobe in einer Kopie, an echten Zitaten der neuen Fixtures: Jahresmiete ÷ 12 als `belegt`, Warmmiete als Kaltmiete, erfundenes Zitat, CHF-Preis als EUR. Zeigen, dass das Eval alle erkennt.
+>
+> **Schritt 4 – Einordnen**
+> Ergebnis in EXTRACTION_ERRORS.md unter «Ergebnisse» als neuer Abschnitt mit Datum: Abweichungen je Fehlklasse, Abdeckung, Regellücken, A/B-Stabilität, Grenzen. Das Gate ist nur belastbar, wenn ≥ 18 Fixtures auswertbar sind, davon ≥ 5 mit Miete, DE und CH vertreten, beide Kandidaten ≥ 90 % erreichen und kein `belegt`-Wert ohne auffindbares Zitat vorkommt. Sonst klar sagen, was fehlt. ROADMAP Stufe 1 nachführen; abhaken nur bei belastbarem Gate.
+>
+> **Schritt 5 – Regeln nachziehen (erst jetzt)**
+> Regellücken und beobachtete Fehler als allgemeine Regeln für EXTRACTION_ERRORS.md und den Skill vorschlagen; ich entscheide. Kennzeichnen, dass diese Regeln am Prüfset entstanden sind und erst im nächsten Lauf blind getestet werden.
+>
+> **Regeln**
+> - Nichts an src/dealkit/model.py ändern. Der Skill schreibt nie «kaufen».
+> - Schweizer Rechtschreibung (ss, kein ß) in deutschen Texten.
+> - Keine Portale abrufen, deren Inserate ich als Text liefere; keine Sperren umgehen.
+> - Vor jedem Commit: `ruff check src tests scripts`, `python3 -m pytest -q`, `dealkit backtest`; CHANGELOG ergänzen. Committet werden nur Gold, Doku und Manifest; einen Draft-PR öffnen.
+> - Am Ende Archiv v3 bereitstellen: alle `.txt`, beide Kandidaten, Gold und Prüfsummen, ohne Personendaten; SHA-256 nennen.
 
 ---
 

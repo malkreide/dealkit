@@ -50,6 +50,9 @@ Stage 1 of the roadmap: extraction with provenance – eval harness.
 - Owner decision: a single unit under construction is `wohnung`, not `neubau_projekt` (class 4,
   skill); gold of `rs-petrovaradin-15` updated accordingly, in `fixtures/listings/` and in the
   rule-test gold under `fixtures/summaries/`. Core values unchanged.
+- `docs/ROADMAP.md`: prepared prompt for the second stage-1 run with DE, CH and rent listings
+  (rules frozen before the run, owner records rent gold first, two independent blind candidates,
+  rule gaps recorded instead of patched before the eval).
 
 ## 0.1.0 – 2026-10-10
 
